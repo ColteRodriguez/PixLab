@@ -112,7 +112,7 @@ def save_polygon_window():
 
         shipy.update_spreadsheet(get_poly_area(app.current.getPointsJson(app.scaleW, app.scaleH)), constituent, image, rating)
         
-        json_file = data_home + '/Training_data/All_data/Labeled/' + image[-13:][0:8] + '.json'
+        json_file = data_home + '/Training_data/All_data/Labeled/' + image[image.index("Img"):][:-4] + '.json'
         
         # If the json file doesn't exist, create it
         if not path.exists(json_file):
