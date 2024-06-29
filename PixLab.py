@@ -18,11 +18,11 @@ gray = "#EEEEEE"
 light_gray = "#403f3f"
 
 # Image paths (replace with your image file paths)
-new_image_icon = "file-explorer-folder-libraries-icon-18298.png"
-save_polygon_icon = "Save_poly_icon.png"
-delete_polygon_icon = "Red_X.svg.png"
-save_image_icon = "save-download-icon-10.png"
-info_img = "26162-200.png"
+new_image_icon = "Cosmetics/file-explorer-folder-libraries-icon-18298.png"
+save_polygon_icon = "Cosmetics/Save_poly_icon.png"
+delete_polygon_icon = "Cosmetics/Red_X.svg.png"
+save_image_icon = "Cosmetics/save-download-icon-10.png"
+info_img = "Cosmetics/26162-200.png"
 
 # Create the main window
 root = tk.Tk()
