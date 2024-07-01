@@ -17,7 +17,7 @@ spreadsheetpath = str(home_data + "/Point_Counts.xlsx")
 images_directory = home_data + '/Sample_Images'
 # random_image = grab_random_image(home + "/Sample_Images")
 random_image = spipy.grab_random_image(images_directory, helperfilepath)
-image_name = random_image[-12:]
+image_name = random_image[-11:]
 print(Fore.WHITE + image_name + " Will be segmented \n ...proceeding to segmentation preview...\n")
 
 while(True):  
