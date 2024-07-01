@@ -150,7 +150,7 @@ class PaintApp:
         xs, ys = self.current.getPointsIndiv()
         x1, y1, x2, y2 = np.min(xs), np.min(ys), np.max(xs), np.max(ys)
         
-        self.delete_item(x1, y1, x2, y2)
+        self.fill_polygon(self.current, 0)
         self.current = None
         self.prev_x = None
         self.prev_y = None
