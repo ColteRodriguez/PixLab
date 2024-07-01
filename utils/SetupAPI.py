@@ -387,7 +387,6 @@ def displayQuadTree(img_name, threshold, minCell, img_boarder, line_boarder, lin
 # displayQuadTree(random_image, threshold=5, minCell=40, img_boarder=70, line_color=(0,0,0), line_boarder = 1)
     
 # Saving the segments of the quadtree to /Unlabeled
-# Saving the segments of the quadtree to /Unlabeled
 def slice_segments(in_image, imName, home_data, thresh, mincell, helperfilepath):
     image = cv2.imread(in_image)
     image_informal_name = imName[0:7]
@@ -399,35 +398,33 @@ def slice_segments(in_image, imName, home_data, thresh, mincell, helperfilepath)
     labeled_segments_path = str(home_data + "/Training_data/All_data/Labeled/")
     img_dir = os.path.join(unlabeled_segments_path, image_informal_name)
     img_dir_lab = os.path.join(labeled_segments_path, image_informal_name)
-    
+    os.mkdir(img_dir)
+    os.mkdir(img_dir_lab)
+                       
+    # Keep some image metadata for later
+    if not os.path.exists(meta_data_filename):  
+        f = open(meta_data_filename, "x")
+        f.write(str(image.shape[0] * image.shape[1]))
+        f.close()
+
+    # partition (redundant)
+    qtIm = QTree(int(thresh), int(mincell), image)
+    qtIm.subdivide()
+
+    # Traverse the tree
+    segments = qtIm.readable_children()
+
     print(Fore.RED + "WARNING: " + str(len(segments)) + " image segments " + " will be saved to " + img_dir)
     kill_process = input(Fore.RED + "Terminate? (Y/N): ")
     if kill_process == 'y' or kill_process == 'Y':
         return
-    
     else:
-        os.mkdir(img_dir)
-        os.mkdir(img_dir_lab)
-
-        # Keep some image metadata for later
-        if not os.path.exists(meta_data_filename):  
-            f = open(meta_data_filename, "x")
-            f.write(str(image.shape[0] * image.shape[1]))
-            f.close()
-
-        # partition (redundant)
-        qtIm = QTree(int(thresh), int(mincell), image)
-        qtIm.subdivide()
-
-        # Traverse the tree
-        segments = qtIm.readable_children()
-
         for segment, i in zip(segments, range(0, len(segments))):  
             # Save the segments to unlabeled
             im = Image.fromarray(np.array(segment))
             name = str(img_dir + imName[0:7] + '_' + str(i) + '.png')
             im.save(img_dir + '/' + imName[0:7] + '_' + str(i) + '.png')
-
+            
         f = open(helperfilepath, "a")
         f.write(str(imName + ", "))
         f.close()
