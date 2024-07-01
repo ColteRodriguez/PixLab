@@ -1,4 +1,4 @@
-import SetupAPI as spipy
+import utils.SetupAPI as spipy
 
 from colorama import Fore                               # For making console output pretty
 import matplotlib.pyplot as plt                         # For quadtree demos
