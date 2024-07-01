@@ -8,10 +8,10 @@ from os import path
 import shutil
 
 # Custom packages
-import ScrollableList
-import SheetAPI as shipy
-import Segment as sg
-import JsonEncoder as jcode
+from tkdependencies import ScrollableList
+import utils.SheetAPI as shipy
+from tkdependencies import Segment as sg
+import utils.JsonEncoder as jcode
 
 # Define colors
 gray = "#EEEEEE"
@@ -167,7 +167,7 @@ def help_window():
     secondary_window.title("WARNING:")
     secondary_window.geometry("200x200")
     # Add a label to the secondary window
-    label = tk.Label(secondary_window, text="Left click to add vertex \n to polygon. Right click \n to delete vertex.")
+    label = tk.Label(secondary_window, text="Left click to add vertex \n to polygon. Right click \n to delete vertex. ")
     label.pack(pady=20, side=tk.TOP)
 # Open QGIS: dumpsterfire ed.
 def open_secondary_window(frame, filename):
@@ -218,6 +218,8 @@ def save_polygon():
 
 def delete_polygon():
     print("Delete Polygon Button Clicked")
+    # get the bounding box for the recent polygon
+    app.killPolygon()
 
 def save_image():
     global ThisSession, image, data_home
