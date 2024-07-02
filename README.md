@@ -1,4 +1,4 @@
-# PixLab
+# PixLab: Installation and Troubleshooting
 With Dependencies!!
 
 # NOTICE:
