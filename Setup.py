@@ -1,3 +1,43 @@
+#install all packages
+import subprocess
+import sys
+
+def install_packages():
+    def install(package):
+        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+    def check_and_install(package):
+        try:
+            __import__(package)
+        except ImportError:
+            install(package)
+
+    # List of packages to check and install
+    packages = [
+        "colorama",
+        "matplotlib",
+        "xlsxwriter",
+        "openpyxl",
+        "PIL",
+        "pathlib",
+        "shutil",
+        "cv2",
+        "opencv-python",
+        "math",
+        "numpy",
+        "random",
+        "os",
+        "time",
+        "tkinter"
+    ]
+
+    print("...Installing Packages...")
+    for package in packages:
+        check_and_install(package)
+
+    print("All packages are installed.")
+
+
 import utils.SetupAPI as spipy
 
 from colorama import Fore                               # For making console output pretty
