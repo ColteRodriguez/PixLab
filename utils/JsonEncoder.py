@@ -66,5 +66,4 @@ def get_shapes(img_path):
             # Otherwise, create a new entry with the label and initialize it with the points list
             shapes_dict[label] = [points]
 
-    # Print the resulting dictionary
     return shapes_dict
