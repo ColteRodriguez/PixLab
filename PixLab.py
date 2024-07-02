@@ -11,6 +11,8 @@ import shutil
 from tkdependencies import ScrollableList
 import utils.SheetAPI as shipy
 from tkdependencies import Segment as sg
+from tkdependencies import Polygon as poly
+from tkdependencies import Point2D
 import utils.JsonEncoder as jcode
 import tkdependencies.AutoCompleteApp as ApCollegeBoard
 
@@ -24,6 +26,7 @@ save_polygon_icon = "Cosmetics/Save_poly_icon.png"
 delete_polygon_icon = "Cosmetics/Red_X.svg.png"
 save_image_icon = "Cosmetics/save-download-icon-10.png"
 info_img = "Cosmetics/26162-200.png"
+history_img = "Cosmetics/History_Icons.webp"
 
 # Create the main window
 root = tk.Tk()
@@ -117,7 +120,7 @@ def save_polygon_window():
             f.close()
                     
             
-        shipy.update_spreadsheet(get_poly_area(app.current.getPointsJson(app.scaleW, app.scaleH)), constituent, image, rating)
+        shipy.update_spreadsheet(get_poly_area(app.current.getPointsJson(app.scaleW, app.scaleH)), constituent, image, rating, data_home + '/Point_Counts.xlsx')
         
         json_file = data_home + '/Training_data/All_data/Labeled/' + image[image.index("Img") + 8:][:-4] + '.json'
         
@@ -170,6 +173,103 @@ def save_polygon_window():
     
     secondary_window.mainloop()
     
+def history_window():
+    global secondary_window, past_image, history_viewer
+    secondary_window = tk.Toplevel()
+    past_image = filedialog.askopenfilename(
+            filetypes=[("Image files", "*.jpg *.jpeg *.png *.bmp *.gif *.tif *.tiff")]
+        )
+    width, height = Image.open(past_image).size
+    SW, SH = 600/width, 600/height
+    
+    def exit_history():
+        global secondary_window
+        if secondary_window is not None:
+            secondary_window.destroy()
+            secondary_window, history_viewer, past_image = None, None, None
+
+    '''
+    bruh this code is so scuffed ik. Only god and myself 
+    knew what was happening when I wrote this so please feel free to make it more efficient
+    '''
+    def up(event):
+        global history_viewer
+        nonlocal SW, SH, text2, objects, i, viewer_frame
+        if i < len(objects):
+            i+=1
+            print(i)
+            objects=list(shapes_dict.items())[i]
+            viewer_frame.pack_forget()
+            viewer_frame.destroy()
+            viewer_frame = tk.Frame(secondary_window)
+            viewer_frame.pack(side=tk.TOP)
+            history_viewer = sg.PaintApp(viewer_frame, past_image)
+            # fill each polygon in the window
+            for list_of_points in objects[1]:
+                polygon = poly.Polygon()
+                for coord in list_of_points:
+                    polygon.addPoint(Point2D.Point2D(coord[0]*SW, coord[1]*SH))
+                history_viewer.fill_polygon(polygon, 128)
+            text2.pack_forget()
+            text2.destroy()
+            text2 = tk.Label(secondary_window, text=f"Currently Viewing: {objects[0]}")
+            text2.pack(side=tk.TOP)
+             
+    def down(event):
+        global history_viewer
+        nonlocal SW, SH, text2, objects, i, viewer_frame
+        if i != 0:
+            i-=1
+            print(i)
+            objects=list(shapes_dict.items())[i]
+            viewer_frame.pack_forget()
+            viewer_frame.destroy()
+            viewer_frame = tk.Frame(secondary_window)
+            viewer_frame.pack(side=tk.TOP)
+            history_viewer = sg.PaintApp(viewer_frame, past_image)
+            # fill each polygon in the window
+            for list_of_points in objects[1]:
+                polygon = poly.Polygon()
+                for coord in list_of_points:
+                    polygon.addPoint(Point2D.Point2D(coord[0]*SW, coord[1]*SH))
+                history_viewer.fill_polygon(polygon, 128)
+            text2.pack_forget()
+            text2.destroy()
+            text2 = tk.Label(secondary_window, text=f"Currently Viewing: {objects[0]}")
+            text2.pack(side=tk.TOP)
+            
+    # get the coords of all polys
+    shapes_dict = jcode.get_shapes(past_image)
+    
+    # init to the fist constit
+    i = 0
+    objects = list(shapes_dict.items())[i]
+    
+    # Enable switching objects with keys
+    secondary_window.bind('<Up>', up)
+    secondary_window.bind('<Down>', down)
+    
+    text = tk.Label(secondary_window, text="Use Up/Down arrows to toggle through Constituents")
+    text.pack(side=tk.TOP)
+    text2 = tk.Label(secondary_window, text=f"Currently Viewing: {objects[0]}")
+    text2.pack(side=tk.TOP)
+    
+    viewer_frame = tk.Frame(secondary_window)
+    viewer_frame.pack(side=tk.TOP)
+    history_viewer = sg.PaintApp(viewer_frame, past_image)
+    # fill each polygon in the window
+    for list_of_points in objects[1]:
+        polygon = poly.Polygon()
+        for coord in list_of_points:
+            polygon.addPoint(Point2D.Point2D(coord[0]*SW, coord[1]*SH))
+        history_viewer.fill_polygon(polygon, 128)
+    
+    done_button = tk.Button(secondary_window, text="Done", command=exit_history)
+    done_button.pack(side=tk.BOTTOM)
+    
+    secondary_window.mainloop()
+    
+
 def help_window():
     global secondary_window
     secondary_window = tk.Toplevel()
@@ -218,7 +318,8 @@ def new_image():
     else:
         open_sure_window()
     
-
+def time_machine():
+    history_window()
 
 def save_polygon():
     print("Save Polygon Button Clicked")
@@ -255,6 +356,9 @@ data_home = input("Project Directory is: ")
 rating = None
 saved_constituents = []
 
+history_viewer = None
+past_image = None
+
 contituents_file = data_home + "/Constituents.txt"
 if not os.path.exists(contituents_file):
     f = open(contituents_file, "w")
@@ -274,6 +378,7 @@ save_polygon_img = ImageTk.PhotoImage(Image.open(save_polygon_icon).resize((50, 
 delete_polygon_img = ImageTk.PhotoImage(Image.open(delete_polygon_icon).resize((40, 40)))
 save_image_img = ImageTk.PhotoImage(Image.open(save_image_icon).resize((40, 40)))
 info_image_img = ImageTk.PhotoImage(Image.open(info_img).resize((40, 40)))
+history_img_ref = ImageTk.PhotoImage(Image.open(history_img).resize((40, 40)))
 
 # Create buttons with text and image
 button_new_image = tk.Button(nav_bar, text="New Image", image=new_image_img, compound=tk.TOP, command=new_image, borderwidth=0, highlightthickness=0)
@@ -290,6 +395,9 @@ button_save_image.pack(side=tk.RIGHT, padx=15)
 
 button_save_image2 = tk.Button(nav_bar, text="Help", image=info_image_img, compound=tk.TOP, command=help_window, borderwidth=0, highlightthickness=0)
 button_save_image2.pack(side=tk.LEFT, padx=15)
+
+button_history = tk.Button(nav_bar, text="Time Machine", image=history_img_ref, compound=tk.TOP, command=time_machine, borderwidth=0, highlightthickness=0)
+button_history.pack(side=tk.LEFT, padx=15)
 
 # Create the sidebar frame
 sidebar = tk.Frame(root, bg=gray, width=250, highlightbackground="black", highlightthickness=1)
