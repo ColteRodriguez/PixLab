@@ -101,8 +101,8 @@ def set_zeros(filename, col):
     workbook.save(filename)
     
 # Dear god here we go, lets keep this organized
-def update_spreadsheet(polygon_area, constituent, image, altertion_score):
-    sheet_path = '/Volumes/LaCie/Project/Point_Counts.xlsx'
+def update_spreadsheet(polygon_area, constituent, image, altertion_score, path):
+    sheet_path = path
     
     # 1.0.1: Query for the sample name (This will always exist if segmented images are used)
     image_name = image[image.index('Img'):image.index('Img')+7]
