@@ -12,6 +12,7 @@ from tkdependencies import ScrollableList
 import utils.SheetAPI as shipy
 from tkdependencies import Segment as sg
 import utils.JsonEncoder as jcode
+import tkdependencies.AutoCompleteApp as ApCollegeBoard
 
 # Define colors
 gray = "#EEEEEE"
@@ -90,14 +91,13 @@ def get_poly_area(points):
     return area
     
 def save_polygon_window():
-    global secondary_window, image
+    global secondary_window, image, saved_constituents, constituents_file
     
-    secondary_window = Tk()
+    secondary_window = tk.Toplevel()
     secondary_window.title("Save Polygon")
-    secondary_window.geometry("400x400")
     
     # Set up frames for styling
-    text_frame1 = tk.Frame(secondary_window, bg='#323232')
+    text_frame1 = tk.Frame(secondary_window, bg='#323232', height = 100)
     text_frame1.pack(side=tk.TOP)
     
     wget_frame1 = tk.Frame(secondary_window, bg='#323232')
@@ -107,9 +107,16 @@ def save_polygon_window():
     # from textbox and printing it  
     # at label widget 
     def polygonal_sends():
-        global image, secondary_window, data_home, rating
-        constituent = inputtxt.get(1.0, "end-1c")
+        global image, secondary_window, data_home, rating, saved_constituents, constituents_file
+        constituent = inputtxt.textbox.get()
 
+        if constituent not in saved_constituents:
+            saved_constituents.append(constituent)
+            f = open(contituents_file, "a")
+            f.write(constituent + ",")
+            f.close()
+                    
+            
         shipy.update_spreadsheet(get_poly_area(app.current.getPointsJson(app.scaleW, app.scaleH)), constituent, image, rating)
         
         json_file = data_home + '/Training_data/All_data/Labeled/' + image[image.index("Img") + 8:][:-4] + '.json'
@@ -136,12 +143,12 @@ def save_polygon_window():
         secondary_window.destroy()
         secondary_window = None
 
-    # TextBox and label Creation 
-    inputtxt = tk.Text(text_frame1, height = 1, width = 20) 
-    inputtxt.pack(side=tk.RIGHT)
     
     inputtxt_text = tk.Label(text_frame1, text="Constituent: ")
     inputtxt_text.pack(side=tk.LEFT)
+    
+    # TextBox and label Creation 
+    inputtxt = ApCollegeBoard.AutoCompleteApp(text_frame1, saved_constituents)
     
     score_text = tk.Label(wget_frame1, text="Alteration Score: ")
     score_text.pack(side=tk.LEFT)
@@ -159,16 +166,19 @@ def save_polygon_window():
 
     # Button Creation 
     printButton = tk.Button(secondary_window, text = "Save", command = polygonal_sends) 
-    printButton.pack(side=tk.BOTTOM) 
+    printButton.pack(side=tk.BOTTOM)
+    
+    secondary_window.mainloop()
     
 def help_window():
     global secondary_window
-    secondary_window = Tk()
+    secondary_window = tk.Toplevel()
     secondary_window.title("WARNING:")
     secondary_window.geometry("200x200")
     # Add a label to the secondary window
     label = tk.Label(secondary_window, text="Left click to add vertex \n to polygon. Right click \n to delete vertex. ")
     label.pack(pady=20, side=tk.TOP)
+    
 # Open QGIS: dumpsterfire ed.
 def open_secondary_window(frame, filename):
     global app
@@ -243,6 +253,20 @@ sure = False
 secondary_window=None
 data_home = input("Project Directory is: ")
 rating = None
+saved_constituents = []
+
+contituents_file = data_home + "/Constituents.txt"
+if not os.path.exists(contituents_file):
+    f = open(contituents_file, "w")
+    f.write(f"")
+    f.close()
+else:
+    f = open(contituents_file, "r")
+    saved_constituents = f.read().split(',')
+    f.close()
+    
+print(saved_constituents)
+            
 
 # Load images (replace with error handling if images not found)
 new_image_img = ImageTk.PhotoImage(Image.open(new_image_icon).resize((40, 40)))
@@ -287,6 +311,6 @@ else:
     f = open(helperfilepath, "a")
     f.write(f"New Session at {datetime.now()} \n")
     f.close()
-
+    
 # Main event loop
 root.mainloop()
