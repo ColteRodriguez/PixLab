@@ -396,7 +396,6 @@ def slice_segments(in_image, imName, home_data, thresh, mincell, helperfilepath)
     # Folder for the image segments
     unlabeled_segments_path = str(home_data + "/Training_data/All_data/Unlabeled/")
     img_dir = os.path.join(unlabeled_segments_path, image_informal_name)
-    img_dir_lab = os.path.join(labeled_segments_path, image_informal_name)
     os.mkdir(img_dir)
                        
     # Keep some image metadata for later
