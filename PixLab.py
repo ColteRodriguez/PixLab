@@ -197,7 +197,6 @@ def history_window():
         nonlocal SW, SH, text2, objects, i, viewer_frame
         if i < len(objects):
             i+=1
-            print(i)
             objects=list(shapes_dict.items())[i]
             viewer_frame.pack_forget()
             viewer_frame.destroy()
@@ -220,7 +219,6 @@ def history_window():
         nonlocal SW, SH, text2, objects, i, viewer_frame
         if i != 0:
             i-=1
-            print(i)
             objects=list(shapes_dict.items())[i]
             viewer_frame.pack_forget()
             viewer_frame.destroy()
