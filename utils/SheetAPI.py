@@ -126,7 +126,7 @@ def update_spreadsheet(polygon_area, constituent, image, altertion_score, path):
     
     ##### Continue
     # 2.0: Update the Constituent percentage distrib
-    for i in range(4, const_col+1):
+    for i in range(5, const_col+1):
         rating = None
         isSubject = False
         
