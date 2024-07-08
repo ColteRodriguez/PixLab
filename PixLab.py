@@ -38,6 +38,73 @@ root.configure(bg=light_gray)
 nav_bar = tk.Frame(root, bg=gray, height=80, highlightbackground="black", highlightthickness=1)
 nav_bar.pack(fill=tk.X, side=tk.TOP)  # Pack at the top
 
+def open_sure_window2():
+    global secondary_window, rating
+    def yess():
+        global image, image_frame, secondary_window, rating
+        constituent = inputtxt.textbox.get()
+
+        if constituent not in saved_constituents:
+            saved_constituents.append(constituent)
+            f = open(contituents_file, "a")
+            f.write(constituent + ",")
+            f.close()
+                        
+        shipy.update_spreadsheet((Image.open(image).width * Image.open(image).width) - total_mapped_area, constituent, image, rating, data_home + '/Point_Counts.xlsx')
+        
+        save_image()
+        secondary_window.destroy()
+        secondary_window = None
+        choose = filedialog.askopenfilename(
+            filetypes=[("Image files", "*.jpg *.jpeg *.png *.bmp *.gif *.tif *.tiff")]
+        )
+        image = choose
+        app = None
+        display_images()
+        
+    def noo():
+        global image, image_frame, secondary_window
+        # Close the secondary window if it exists
+        secondary_window.destroy()
+        secondary_window = None
+        
+    # Create a new window if it doesn't already exist or if it has been closed
+    secondary_window = tk.Toplevel()
+    secondary_window.title("Save Image?:")
+    secondary_window.geometry("400x600")
+    # Add a label to the secondary window
+    label = tk.Label(secondary_window, text="It appears the sample isn't completely annotated! \n Please select a constituent that you have NOT yet \n marked for this image in order to gague a 'Background' primary \n constituent (Micrite, Mud, Pore Space). NOTE that the dominant constituent\n will NOT be counted as a polygon and thus will be invisible in \n the Time Machine, and will not contribute to training data. \n it is purely for tracking constituent percentages.")
+    label.pack(pady=20, side=tk.TOP)
+    
+    inputtxt_text = tk.Label(secondary_window, text="Primary/Dominant Constituent: ")
+    inputtxt_text.pack(side=tk.TOP)
+    
+    # TextBox and label Creation 
+    inputtxt = ApCollegeBoard.AutoCompleteApp(secondary_window, saved_constituents)
+    
+    # Pack up the buttons
+    buttons_frame = tk.Frame(secondary_window)
+    buttons_frame.pack(side=tk.BOTTOM)
+    
+    score_text = tk.Label(buttons_frame, text="Alteration Score: ")
+    score_text.pack(side=tk.TOP)
+    
+    def update_rating(value):
+        global rating
+        rating = value
+        
+    # Score buttons
+    alterations = ['Unaltered', 'Some Alteration (1-30%)', 'Patchy or Moderate Alteration (30-60%)', 'Patchy Nonalteration (60-80%)', 'Completely Altered']
+    # Add 4 regular buttons to the right
+    for i in range(1, 6):
+        button = tk.Button(buttons_frame, text=f"{alterations[i - 1]}", command=lambda value=i: update_rating(value), width = 25)
+        button.pack(anchor='e', pady=2)
+    
+    yes = tk.Button(buttons_frame, text="Save image to '/Labeled'", command=yess)
+    yes.pack(side=tk.TOP)
+    
+    secondary_window.mainloop()
+    
 def open_sure_window():
     global secondary_window
     def yess():
@@ -110,7 +177,7 @@ def save_polygon_window():
     # from textbox and printing it  
     # at label widget 
     def polygonal_sends():
-        global image, secondary_window, data_home, rating, saved_constituents, constituents_file
+        global image, secondary_window, data_home, rating, saved_constituents, constituents_file, total_mapped_area
         constituent = inputtxt.textbox.get()
 
         if constituent not in saved_constituents:
@@ -118,8 +185,10 @@ def save_polygon_window():
             f = open(contituents_file, "a")
             f.write(constituent + ",")
             f.close()
-                    
-            
+        
+        print(get_poly_area(app.current.getPointsJson(app.scaleW, app.scaleH)))
+        
+        total_mapped_area+=get_poly_area(app.current.getPointsJson(app.scaleW, app.scaleH))
         shipy.update_spreadsheet(get_poly_area(app.current.getPointsJson(app.scaleW, app.scaleH)), constituent, image, rating, data_home + '/Point_Counts.xlsx')
         
         json_file = data_home + '/Training_data/All_data/Labeled/' + image[image.index("Img") + 8:][:-4] + '.json'
@@ -190,13 +259,14 @@ def history_window():
 
     '''
     bruh this code is so scuffed ik. Only god and myself 
-    knew what was happening when I wrote this so please feel free to make it more efficient
+    knew what was happening when I wrote this.
     '''
     def up(event):
         global history_viewer
         nonlocal SW, SH, text2, objects, i, viewer_frame
         if i < len(objects):
             i+=1
+            print(i)
             objects=list(shapes_dict.items())[i]
             viewer_frame.pack_forget()
             viewer_frame.destroy()
@@ -219,6 +289,7 @@ def history_window():
         nonlocal SW, SH, text2, objects, i, viewer_frame
         if i != 0:
             i-=1
+            print(i)
             objects=list(shapes_dict.items())[i]
             viewer_frame.pack_forget()
             viewer_frame.destroy()
@@ -284,7 +355,9 @@ def open_secondary_window(frame, filename):
 
 
 def display_images():
-    global image, image_frame
+    global image, image_frame, total_mapped_area
+    
+    total_mapped_area = 0
     
     # Delete any current wgets
     if image is not None and (image_frame is not None):
@@ -332,8 +405,8 @@ def delete_polygon():
 
 def save_image():
     global ThisSession, image, data_home
-    ThisSession.add_label(image)
     
+    ThisSession.add_label(image)
     # Move the file to the respective classification
     source_path = image
     destination_path = data_home + '/Training_data/All_data/Labeled'
@@ -353,6 +426,7 @@ secondary_window=None
 data_home = input("Project Directory is: ")
 rating = None
 saved_constituents = []
+total_mapped_area = 0
 
 history_viewer = None
 past_image = None
@@ -388,7 +462,7 @@ button_save_polygon.pack(side=tk.LEFT, padx=15)
 button_delete_polygon = tk.Button(nav_bar, text="Delete Polygon", image=delete_polygon_img, compound=tk.TOP, command=delete_polygon, borderwidth=0, highlightthickness=0)
 button_delete_polygon.pack(side=tk.LEFT, padx=15)
 
-button_save_image = tk.Button(nav_bar, text="Save Image", image=save_image_img, compound=tk.TOP, command=open_sure_window, borderwidth=0, highlightthickness=0)
+button_save_image = tk.Button(nav_bar, text="Save Image", image=save_image_img, compound=tk.TOP, command=open_sure_window2, borderwidth=0, highlightthickness=0)
 button_save_image.pack(side=tk.RIGHT, padx=15)
 
 button_save_image2 = tk.Button(nav_bar, text="Help", image=info_image_img, compound=tk.TOP, command=help_window, borderwidth=0, highlightthickness=0)
@@ -418,5 +492,4 @@ else:
     f.write(f"New Session at {datetime.now()} \n")
     f.close()
     
-# Main event loop
 root.mainloop()
