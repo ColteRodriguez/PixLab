@@ -35,7 +35,7 @@ def update_percent(Pcurr, Tcurr, segment_area, rating, isSubject):
     if rating is not None:
         return ((Pcurr * Tcurr) + (rating * segment_area)) / (Tcurr + segment_area)
     # Update the constituent or feature
-    elif isSubject == True:
+    if isSubject == True:
         return ((Pcurr * Tcurr) + (segment_area)) / (Tcurr + segment_area)
     # Update other constituents whose areas are not to be updated
     else:
