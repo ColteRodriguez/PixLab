@@ -32,11 +32,11 @@ Here's a (very unprofessional) code demo video as a placeholder for README -- no
    - [Segment](#Segment)
    - [ScrollableListApp](#ScrollableListApp)
    - [AutoCompleteApp](#AutoCompleteApp)
-2. [Functions](#functions)
-   - [function1](#function1)
-   - [function2](#function2)
-
----
+2. [Libraries](#Libraries)
+   - [SheetAPI](#SheetAPI)
+   - [SetupAPI](#SetupAPI)
+   - [JsonEncoder](#JsonEncoder)
+___
 
 ## Classes <a name="Classes"></a>
 
@@ -362,41 +362,58 @@ ___
 ### AutoCompleteApp <a name="AutoCompleteApp"></a>
 
 #### Description
-Tacks completed images in the right box in the gui. Its so unimportant that I wont document it. Honestly you could delete it if you want.
+Tracks completed images in the right box in the gui. Its so unimportant that I wont document it. Honestly you could delete it if you want.
 
 ___
-### Segment <a name="Segment"></a>
+### AutoCompleteApp <a name="AutoCompleteApp"></a>
 
 #### Description
-Modified PaintApp class. Used to communicate Point2D and Polygon classes with the physical tkinter GUI by using keybinds to draw points, lines, and polygons while storing their references for use on the backend. Cnstructed from a image canvas and a transparent canvas overlay. Instance variables:
+A tkinter dependecy udes to display options of annotations in the annotation window to keep naming consistent. Instance vars:
 
-    self.root: tkinter root window
-    self.CW, self.CH: Canvas width and height respectivly
-    self.canvas: tkinter canvas object
-    self.imageO: A reference to the original image to be displayed 
-    self.OW, self.OH: A referecne to the original image dimensions  
-    self.scaleW, self.scaleH: How much we need to divide positions by to get the actual coords    
-    self.image: The oringal image resized to self.CW, self.CH
-    self.img: a tkPhotoImage instance of self.image
-    self.ref: reference to self.img to ward off sneaky garbage collection      
-    self.overlay: Create an RGBA image for transparency
-    self.overlay_img: a tkPhotoImage instance of self.overlay  
-    self.prev_x: Store previous click x-coordinate
-    self.prev_y: Store previous click y-coordinate   
-    self.shapes: Array of Polygon objects
-    self.current: The polygon currently being formed
-    self.current_polygon: Defensive copy of self.current
+        self.parent: tkinter window (typically an instance of tk.TopLevel)
+        self.options: String[] of options
+        self.text_var: a tkinter StringVar()
+        self.textbox: tkinter textbox populated with self.text_var for user input
+        self.dropdown_frame: frame for options
+        self.listbox: tkinter Listbox(self.dropdown_frame)
+        self.scrollbar: tkinter Scrollbar(self.dropdown_frame)
 
 #### Methods
 
-##### on_return(self)
+##### show_dropdown(self, *args)
 ```python
-def on_return(self):
+def show_dropdown(self, *args):
     """
-    Adds the current shape (self.current) to self.shapes[] and resets the polygon parameters (self.current, self.prev_x, self.prev_y = None, None, None)
+    I think this one explains itself
+
+    Args:
+        *args: options for constituents
+    Returns:
+        None
+    """
+```
+
+##### populate_listbox(self)
+```python
+def populate_listbox(self):
+    """
+    populates dropdown with options
 
     Args:
         None
+    Returns:
+        None
+    """
+```
+
+##### on_select(self, event)
+```python
+def on_select(self, event):
+    """
+    leftclick keybind on an option in the dropdown will autofill it in the textbox
+
+    Args:
+        tkinter_keybind event: left click
     Returns:
         None
     """
