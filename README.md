@@ -21,46 +21,225 @@ Here's a (very unprofessional) code demo video as a placeholder for README -- no
 - Added primary/background constituent tracking to account for all pixels (while only sneding foreground to training data)
 - Other minor bug fixes
 
-# DOCUMENTATION
-## Point2D
-&nbsp; &nbsp; A standard Point2D class constructed from a double x and double y coordinate\
-\
-**x(self):**\
-&nbsp;&nbsp; Standard instance method to return the x coordinate\
-\
-**y(self):** \
-&nbsp;&nbsp; Standard instance method to return the y coordinate\
-\
-**isWithin(self, Point2D otherPoint):** \
-&nbsp;&nbsp; Returns True if Euclidean distance to otherPoint is less than threshold (THRESHOLD defined in outer scope)\
-\
-**distance(self, otherPoint):**\
-&nbsp;&nbsp; Helper method for isWithin(). Returns Euclidian distance to otherPoint\
-\
-**toString(self):**\
-&nbsp;&nbsp; Standard toString instance method for unit testing in main()\
-\
 
-## Polygon
-&nbsp; &nbsp; A standard Polygon class constructed from an array of Point2d objects. self.points[] functions like a stack\
-\
-**isComplete(self):**\
-&nbsp;&nbsp; Returns True iff the last point == the first point\
-\
-**addPoint(self, Point2D point):** \
-&nbsp;&nbsp; Push new Point2D object onto self.points[]. If the polygon has > 2 vertices and the new point is within (see isWithin() Point2D), the new point coordinates are set to be identical to the first point in self.points[] in order ot close the polygon shape.\
-\
-**getRecent(self):** \
-&nbsp;&nbsp; Pops the most recently added point from self.points[], returns it, then pushes it back\
-\
-**removePoint(self):**\
-&nbsp;&nbsp; Pops the most recently added point from self.points[] without pushing it back\
-\
-**getpoints(self):**\
-&nbsp;&nbsp; returns self.points[]\
-\
-**getPointsScaled(self, double sW, double sH):**\
-&nbsp;&nbsp; returns self.points[], where each point x, y is scaled by sW and sH respectivly. Used to convert point coordinates in GUI canvas to actual image coordinates\
-\
-**getTuplePointsScaled(self, sW, sH):**\
-&nbsp;&nbsp; returns self.points[]\
+# DOCUMENTATION
+
+## Table of Contents
+
+1. [Classes](#Classes)
+   - [Point2D](#Point2D)
+   - [Polygon](#Polygon)
+   - [Segment](#Segment)
+2. [Functions](#functions)
+   - [function1](#function1)
+   - [function2](#function2)
+
+---
+
+## Classes
+
+### Point2D
+
+#### Description
+A standard Point2D class constructed from a double x and double y coordinate
+
+#### Methods
+
+##### x(self)
+```python
+def x(self):
+    """
+    Standard instance method to return the x coordinate
+
+    Args:
+        None
+    Returns:
+        double: x coordinate
+    """
+```
+
+##### y(self)
+```python
+def y(self):
+    """
+    Standard instance method to return the y coordinate
+
+    Args:
+        None
+    Returns:
+        double: y coordinate
+    """
+```
+
+##### isWithin(self, Point2D otherPoint)
+```python
+def isWithin(self, otherPoint):
+    """
+    Determines if Euclidean distance to another point is less than a set threshold (THRESHOLD defined in outer scope)
+
+    Args:
+        Point2D otherPoint: point to comapre distance with self
+    Returns:
+        bool: True if Euclidean distance to otherPoint is less than threshold, false otherwise.
+    """
+```
+
+##### distance(self, otherPoint)
+```python
+def distance(self, otherPoint):
+    """
+    Helper method for isWithin(). Euclidian distance formula
+
+    Args:
+        Point2D otherPoint: point to comapre distance with self
+    Returns:
+        double: Euclidean distance to otherPoint
+    """
+
+```
+
+##### toString(self)
+```python
+def toString(self):
+    """
+    Standard toString instance method for unit testing in main()
+
+    Args:
+        None
+    Returns:
+        String: String representation of "(x, y)"
+    """
+```
+
+### Polygon
+
+#### Description
+A standard Polygon class constructed from an array of Point2d objects. self.points[] functions like a stack
+
+#### Methods
+
+##### isComplete(self)
+```python
+def isComplete(self):
+    """
+    Replaces instance variable isCompelete
+
+    Args:
+        None
+    Returns:
+        Bool: True if polygon is closed (self.points[0] == self.points[-1])
+    """
+```
+
+##### addPoint(self, point)
+```python
+def addPoint(self, point):
+    """
+    Push new Point2D object onto self.points[]. If the polygon has > 2 vertices and the new point is within (see isWithin() Point2D), the new point coordinates are set to be identical to the first point in self.points[] in order ot close the polygon shape.
+
+    Args:
+        Point2D point: Point object toadd to the polygon
+    Returns:
+        None
+    """
+```
+
+##### getRecent(self)
+```python
+def getRecent(self):
+    """
+    Pops the most recently added point from self.points[], returns it, then pushes it back
+
+    Args:
+        None
+    Returns:
+        Point2D: most recent point
+    """
+```
+
+##### removePoint(self)
+```python
+def removePoint(self):
+    """
+    Pops the most recently added point from self.points[] without replacement
+
+    Args:
+        None
+    Returns:
+        Point2D: most recent point
+    """
+```
+
+##### getPoints(self)
+```python
+def getPoints(self):
+    """
+    returns self.points[]
+
+    Args:
+        None
+    Returns:
+        Point2D[]: self.points[] instance variable
+    """
+```
+
+##### getPointsScaled(self, sW, sH)
+```python
+def getPointsScaled(self, sW, sH):
+    """
+    returns self.points[], where each point x, y is scaled by sW and sH respectivly. Used to convert point coordinates in GUI canvas to actual image coordinates
+
+    Args:
+        double sW: x scaling factor
+        double sH: y scaling factor
+    Returns:
+        Point2D[]: self.points[] where each point is constructed from x*sW and y*sH
+    """
+```
+
+##### getTuplePointsScaled(self, sW, sH)
+```python
+def getTuplePointsScaled(self, sW, sH):
+    """
+    returns self.points[], where each point x, y is a tuple 
+
+    Args:
+        double sW: x scaling factor
+        double sH: y scaling factor
+    Returns:
+        Tuple[]: self.points[] where each point is constructed from x*sW and y*sH and represented by (x, y)
+    """
+```
+
+##### toString(self)
+```python
+def getTuplePointsScaled(self, sW, sH):
+    """
+    returns a string representation of self.points[]
+
+    Args:
+        None
+    Returns:
+        String: Returns the unscaled self.points[] as a string. to return scaled use toStringScaled(self, sW, sH)
+    """
+```
+
+### Segment
+
+#### Description
+A standard Polygon class constructed from an array of Point2d objects. self.points[] functions like a stack
+
+#### Methods
+
+##### isComplete(self)
+```python
+def isComplete(self):
+    """
+    Replaces instance variable isCompelete
+
+    Args:
+        None
+    Returns:
+        Bool: True if polygon is closed (self.points[0] == self.points[-1])
+    """
+```
