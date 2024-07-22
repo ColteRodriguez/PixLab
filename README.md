@@ -774,18 +774,92 @@ ___
 
 #### Methods
 
-##### locate_sample(spreadsheet_path, name_query, sheet_num)
+##### install_packages()
 ```python
-def locate_sample(spreadsheet_path, name_query, sheet_num):
+def install_packages():
     """
-    Finds the spreadsheet coordinates of a given query string
+    Ensures correct build for detectron2 and installs dependencies, some of which should already be preloaded in this repository (like /output)
 
     Args:
-        String spreadsheet_path: full path to spreadsheet
-        String name_query: String to locate
-        int sheet_num: 0 by default
+        None
     Returns:
-        int row: returns None iff the query string doesnt exist in spreadsheet_path
-        int col: returns None iff the query string doesnt exist in spreadsheet_path
+        None
     """
 ```
+
+##### update_json_image_path(json_file_path, new_image_path)
+```python
+def update_json_image_path(json_file_path, new_image_path):
+    """
+    Duplicate. See JsonEncode.changeSource(img_path, jsonfile)
+
+    Args:
+        String new_image_path: full new image path
+        String json_file_path: json file path
+    Returns:
+        None
+    """
+```
+
+##### get_unique_labels(directory_path)
+```python
+def get_unique_labels(directory_path):
+    """
+    Crawls all JSON files in /labeled for a all unique labels
+
+    Args:
+        String directory_path: path to a /labeled subdirectory
+    Returns:
+        String[]: Array of unique labels
+    """
+```
+
+##### create_folders_and_move_files(new_dir_name, data_dir_path)
+```python
+def create_folders_and_move_files(new_dir_name, data_dir_path):
+    """
+    Creates a new subdirectory in project folder configured with /train and /test, and moves all images and json files from data_dir_path (/labeled) to /train of new_dir_name
+
+    Args:
+        String new_dir_name: path to a new folder named as given by user
+        String data_dir_path: path to a /labeled folder named as given by user
+    Returns:
+        method_call get_unique_labels(new_dir_name/train): Array of unique labels forthe training data
+        String new_main_folder_path: os.join(project directory, new_dir_name), full path to the new subdirectory
+    """
+```
+
+##### register_dataset(labels, dataset_name, dataset_path)
+```python
+def register_dataset(labels, dataset_name, dataset_path):
+    """
+    Registers a COCO formatted version of annotations with detectron2
+
+    Args:
+        String[] labels: Array of unique labels
+        String dataset_name: model name as given by user
+        String dataset_path: path to the new subdirectory with the dataset
+
+    Returns:
+        Hashmap microfacies_metadata: Hashmap of dataset metadata as {name={datasetname}, thing_classes=[labels]}. See add_key_value_to_dict() <-- this is important and may be a source of bugs
+        String (dataset_name + "_train"): Full path to the training folder
+    """
+```
+
+##### train_and_save(metadata, training_supplies, labels, model_name)
+```python
+def train_and_save(metadata, training_supplies, labels, model_name):
+    """
+    Registers a COCO formatted version of annotations with detectron2
+
+    Args:
+        String[] labels: Array of unique labels
+        String dataset_name: model name as given by user
+        String dataset_path: path to the new subdirectory with the dataset
+
+    Returns:
+        Hashmap microfacies_metadata: Hashmap of dataset metadata as {name={datasetname}, thing_classes=[labels]}. See add_key_value_to_dict() <-- this is important and may be a source of bugs
+        String (dataset_name + "_train"): Full path to the training folder
+    """
+```
+
