@@ -2,11 +2,6 @@
 With Dependencies!!
 
 # NOTICES:
-It is suuuuuper important to run Setup.py at least once before running the code on a new devide regardless of whether or not the project folder is already configured. See Setup.py most recent commit -- "auto-install packages"
-
-## Also
-It is entirely feasible to run the code without the external drive so long as you have a "Project" folder somewhere with the appropriate configuration (see video). Transfering data and running the app across other devices works the same, but would require zipping the "Project" folder and sending it to the device
-
 Sorry for the visual bugs, our worker bees (me) are working so very hard to debug!
 Here's a (very unprofessional) code demo video as a placeholder for README -- nobody reads those anyways right?
 
@@ -22,7 +17,7 @@ Here's a (very unprofessional) code demo video as a placeholder for README -- no
 - Other minor bug fixes
 
 
-# DOCUMENTATION
+# FULL DOCUMENTATION
 
 ## Table of Contents
 
@@ -36,6 +31,13 @@ Here's a (very unprofessional) code demo video as a placeholder for README -- no
    - [SheetAPI](#SheetAPI)
    - [SetupAPI](#SetupAPI)
    - [JsonEncoder](#JsonEncoder)
+3. [MLtools](#MLtools)
+   - [Train_Custom_Dataset](#Train_Custom_Dataset)
+   - [Run_Image_Analysis](#Run_Image_Analysis)
+4. [Miscellaneous](#Miscellaneous)
+   - [Preclassifier](#Preclassifier)
+   - [Detectron2 Useful Info](#Detectron2_Usefull_Info)
+   - [Documented Errors, Bugs, and fixes](#Documented_Errors_Bugs_and_fixes)
 ___
 
 ## Classes <a name="Classes"></a>
