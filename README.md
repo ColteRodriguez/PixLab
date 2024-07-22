@@ -418,3 +418,60 @@ def on_select(self, event):
         None
     """
 ```
+___
+## Libraries <a name="Libraries"></a>
+
+### SheetAPI <a name="SheetAPI"></a>
+
+#### Description
+NOT AN API I DON'T KNOW WHY I CALLED IT AN API THERE AREN'T EVEN ANY CLASSES ITS JUST A LIBRARY BUT I DON'T WANT TO CHANGE THE NAME NOW. Uses openpyxl to manipulate Point_Counts.xlsx and track annotations in the GUI.
+
+#### Methods
+
+##### locate_sample(spreadsheet_path, name_query, sheet_num)
+```python
+def locate_sample(spreadsheet_path, name_query, sheet_num):
+    """
+    Finds the spreadsheet coordinates of a given query string
+
+    Args:
+        String spreadsheet_path: full path to spreadsheet
+        String name_query: String to locate
+        int sheet_num: 0 by default
+    Returns:
+        int row: returns None iff the query string doesnt exist in spreadsheet_path
+        int col: returns None iff the query string doesnt exist in spreadsheet_path
+    """
+```
+
+##### get_cell(row, col, spreadsheet_path, sheet_num)
+```python
+def get_cell(row, col, spreadsheet_path, sheet_num):
+    """
+    Returns the value of a given spreadsheet index
+
+    Args:
+        int row: spreadsheet coordinates (1-indexed)
+        int col: spreadsheet coordinates (1-indexed)
+        String spreadsheet_path: full path to spreadsheet
+        int sheet_num: 0 by default
+    Returns:
+        String val: The value of the cell. String by default
+    """
+```
+
+##### update_percent(Pcurr, Tcurr, segment_area, rating, isSubject)
+```python
+def update_percent(Pcurr, Tcurr, segment_area, rating, isSubject):
+    """
+     ffff
+
+    Args:
+        int row: spreadsheet coordinates (1-indexed)
+        int col: spreadsheet coordinates (1-indexed)
+        String spreadsheet_path: full path to spreadsheet
+        int sheet_num: 0 by default
+    Returns:
+        String val: The value of the cell. String by default
+    """
+```
