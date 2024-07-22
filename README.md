@@ -38,6 +38,7 @@ Here's a (very unprofessional) code demo video as a placeholder for README -- no
    - [Preclassifier](#Preclassifier)
    - [Detectron2 Useful Info](#Detectron2_Usefull_Info)
    - [Documented Errors, Bugs, and fixes](#Documented_Errors_Bugs_and_fixes)
+   - [Off My Soapbox: Use Cases, Future Changes, etc.](#Soapbox)
 ___
 
 ## Classes <a name="Classes"></a>
