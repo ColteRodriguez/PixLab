@@ -1,4 +1,4 @@
-# PixLab: Installation and Troubleshooting
+# PixLab: Installation, Troubleshooting, and Documentation
 With Dependencies!!
 
 # NOTICES:
