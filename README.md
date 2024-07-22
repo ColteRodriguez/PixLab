@@ -36,9 +36,9 @@ Here's a (very unprofessional) code demo video as a placeholder for README -- no
 
 ---
 
-## Classes
+## Classes <a name="Classes"></a>
 
-### Point2D
+### Point2D <a name="Point2D"></a>
 
 #### Description
 A standard Point2D class constructed from a double x and double y coordinate
@@ -111,7 +111,7 @@ def toString(self):
     """
 ```
 
-### Polygon
+### Polygon <a name="Polygon"></a>
 
 #### Description
 A standard Polygon class constructed from an array of Point2d objects. self.points[] functions like a stack
@@ -224,7 +224,7 @@ def getTuplePointsScaled(self, sW, sH):
     """
 ```
 
-### Segment
+### Segment <a name="Segment"></a>
 
 #### Description
 A standard Polygon class constructed from an array of Point2d objects. self.points[] functions like a stack
