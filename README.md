@@ -460,18 +460,116 @@ def get_cell(row, col, spreadsheet_path, sheet_num):
     """
 ```
 
-##### update_percent(Pcurr, Tcurr, segment_area, rating, isSubject)
+##### change_cell(row, col, spreadsheet_path, val, sheet_num)
 ```python
-def update_percent(Pcurr, Tcurr, segment_area, rating, isSubject):
+def change_cell(row, col, spreadsheet_path, val, sheet_num):
     """
-     ffff
+     Changes the value of a given cell
 
     Args:
         int row: spreadsheet coordinates (1-indexed)
         int col: spreadsheet coordinates (1-indexed)
         String spreadsheet_path: full path to spreadsheet
+        int or String val: vleu to be changed to
         int sheet_num: 0 by default
     Returns:
-        String val: The value of the cell. String by default
+        None
     """
 ```
+
+##### update_percent(Pcurr, Tcurr, segment_area, rating, isSubject)
+```python
+def update_percent(Pcurr, Tcurr, segment_area, rating, isSubject):
+    """
+     Updates the percent distributions of all constituents in Point_Counts.xlsx
+
+    Args:
+        double Pcurr: current percent of a given constituent
+        double Tcurr: current total number of mapped pixels
+        double segment_area: the number of pixels of the polygon to be added
+        int rating: alteration score
+        bool isSubject: True if the constituent == the constituent of the added polygon
+    Returns:
+        None
+    """
+```
+
+##### add_new_sample(path, name)
+```python
+def add_new_sample(path, name):
+    """
+     Adds a new row header (sample) to the first available spot
+
+    Args:
+        String path: Spreadsheet path
+        String name: name of the sample to be added
+    Returns:
+        None
+    """
+```
+
+##### find_open_cell(filename)
+```python
+def find_open_cell(filename):
+    """
+     Finds an open column in order to add new constituents
+
+    Args:
+        String filename: Spreadsheet path
+    Returns:
+        None
+    """
+```
+
+##### set_zeros(filename, col)
+```python
+def find_open_cell(filename):
+    """
+     Adds a new costituent column header
+
+    Args:
+        String filename: Spreadsheet path
+        int col: open column to add
+    Returns:
+        None
+    """
+```
+##### update_spreadsheet(polygon_area, constituent, image, altertion_score, path)
+```python
+def update_spreadsheet(polygon_area, constituent, image, altertion_score, path):
+    """
+     Adds a new costituent column header
+
+    Args:
+        String filename: Spreadsheet path
+        int col: open column to add
+    Returns:
+        None
+    """
+```
+___
+## Libraries <a name="Libraries"></a>
+
+### SheetAPI <a name="SheetAPI"></a>
+
+#### Description
+NOT AN API I DON'T KNOW WHY I CALLED IT AN API THERE AREN'T EVEN ANY CLASSES ITS JUST A LIBRARY BUT I DON'T WANT TO CHANGE THE NAME NOW. Uses openpyxl to manipulate Point_Counts.xlsx and track annotations in the GUI.
+
+#### Methods
+
+##### locate_sample(spreadsheet_path, name_query, sheet_num)
+```python
+def locate_sample(spreadsheet_path, name_query, sheet_num):
+    """
+    Finds the spreadsheet coordinates of a given query string
+
+    Args:
+        String spreadsheet_path: full path to spreadsheet
+        String name_query: String to locate
+        int sheet_num: 0 by default
+    Returns:
+        int row: returns None iff the query string doesnt exist in spreadsheet_path
+        int col: returns None iff the query string doesnt exist in spreadsheet_path
+    """
+```
+
