@@ -20,3 +20,47 @@ Here's a (very unprofessional) code demo video as a placeholder for README -- no
 - Fixed spreadsheet indexing so alteration score is acurate
 - Added primary/background constituent tracking to account for all pixels (while only sneding foreground to training data)
 - Other minor bug fixes
+
+# DOCUMENTATION
+## Point2D
+&nbsp; &nbsp; A standard Point2D class constructed from a double x and double y coordinate\
+\
+**x(self):**\
+&nbsp;&nbsp; Standard instance method to return the x coordinate\
+\
+**y(self):** \
+&nbsp;&nbsp; Standard instance method to return the y coordinate\
+\
+**isWithin(self, Point2D otherPoint):** \
+&nbsp;&nbsp; Returns True if Euclidean distance to otherPoint is less than threshold (THRESHOLD defined in outer scope)\
+\
+**distance(self, otherPoint):**\
+&nbsp;&nbsp; Helper method for isWithin(). Returns Euclidian distance to otherPoint\
+\
+**toString(self):**\
+&nbsp;&nbsp; Standard toString instance method for unit testing in main()\
+\
+
+## Polygon
+&nbsp; &nbsp; A standard Polygon class constructed from an array of Point2d objects. self.points[] functions like a stack\
+\
+**isComplete(self):**\
+&nbsp;&nbsp; Returns True iff the last point == the first point\
+\
+**addPoint(self, Point2D point):** \
+&nbsp;&nbsp; Push new Point2D object onto self.points[]. If the polygon has > 2 vertices and the new point is within (see isWithin() Point2D), the new point coordinates are set to be identical to the first point in self.points[] in order ot close the polygon shape.\
+\
+**getRecent(self):** \
+&nbsp;&nbsp; Pops the most recently added point from self.points[], returns it, then pushes it back\
+\
+**removePoint(self):**\
+&nbsp;&nbsp; Pops the most recently added point from self.points[] without pushing it back\
+\
+**getpoints(self):**\
+&nbsp;&nbsp; returns self.points[]\
+\
+**getPointsScaled(self, double sW, double sH):**\
+&nbsp;&nbsp; returns self.points[], where each point x, y is scaled by sW and sH respectivly. Used to convert point coordinates in GUI canvas to actual image coordinates\
+\
+**getTuplePointsScaled(self, sW, sH):**\
+&nbsp;&nbsp; returns self.points[]\
