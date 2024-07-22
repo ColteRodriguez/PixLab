@@ -30,6 +30,8 @@ Here's a (very unprofessional) code demo video as a placeholder for README -- no
    - [Point2D](#Point2D)
    - [Polygon](#Polygon)
    - [Segment](#Segment)
+   - [ScrollableListApp](#ScrollableListApp)
+   - [AutoCompleteApp](#AutoCompleteApp)
 2. [Functions](#functions)
    - [function1](#function1)
    - [function2](#function2)
@@ -110,7 +112,7 @@ def toString(self):
         String: String representation of "(x, y)"
     """
 ```
-
+___
 ### Polygon <a name="Polygon"></a>
 
 #### Description
@@ -223,23 +225,179 @@ def getTuplePointsScaled(self, sW, sH):
         String: Returns the unscaled self.points[] as a string. to return scaled use toStringScaled(self, sW, sH)
     """
 ```
-
+___
 ### Segment <a name="Segment"></a>
 
 #### Description
-A standard Polygon class constructed from an array of Point2d objects. self.points[] functions like a stack
+Modified PaintApp class. Used to communicate Point2D and Polygon classes with the physical tkinter GUI by using keybinds to draw points, lines, and polygons while storing their references for use on the backend. Cnstructed from a image canvas and a transparent canvas overlay. Instance variables:
+
+    self.root: tkinter root window
+    self.CW, self.CH: Canvas width and height respectivly
+    self.canvas: tkinter canvas object
+    self.imageO: A reference to the original image to be displayed 
+    self.OW, self.OH: A referecne to the original image dimensions  
+    self.scaleW, self.scaleH: How much we need to divide positions by to get the actual coords    
+    self.image: The oringal image resized to self.CW, self.CH
+    self.img: a tkPhotoImage instance of self.image
+    self.ref: reference to self.img to ward off sneaky garbage collection      
+    self.overlay: Create an RGBA image for transparency
+    self.overlay_img: a tkPhotoImage instance of self.overlay  
+    self.prev_x: Store previous click x-coordinate
+    self.prev_y: Store previous click y-coordinate   
+    self.shapes: Array of Polygon objects
+    self.current: The polygon currently being formed
+    self.current_polygon: Defensive copy of self.current
 
 #### Methods
 
-##### isComplete(self)
+##### on_return(self)
 ```python
-def isComplete(self):
+def on_return(self):
     """
-    Replaces instance variable isCompelete
+    Adds the current shape (self.current) to self.shapes[] and resets the polygon parameters (self.current, self.prev_x, self.prev_y = None, None, None)
 
     Args:
         None
     Returns:
-        Bool: True if polygon is closed (self.points[0] == self.points[-1])
+        None
+    """
+```
+
+##### on_backspace(self, event)
+```python
+def on_backspace(self, event):
+    """
+    Removes the last added point from self.current, deletes the point on the canvas, and resets self.prev_x, y.
+
+    Args:
+        tkinter_keybind event: keyboard or touchpad input (right click)
+    Returns:
+        None
+    """
+```
+
+##### on_click(self, event)
+```python
+def on_backspace(self, event):
+    """
+    Adds a new point to the current polygon. draws the vertices and edges as needed
+
+    Args:
+        tkinter_keybind event: keyboard or touchpad input (left click)
+    Returns:
+        None
+    """
+```
+
+##### draw_dot(self, x, y)
+```python
+def on_backspace(self, event):
+    """
+    Adds a new vertex (black oval) to self.canvas.
+
+    Args:
+        double x: x coordinate
+        double y: y coordinate
+    Returns:
+        None
+    """
+```
+
+##### draw_line(self, x1, y1, x2, y2)
+```python
+def on_backspace(self, event):
+    """
+    Adds a new line between two vertices to self.canvas.
+
+    Args:
+        double x1: starting x coordinate
+        double y1: starting y coordinate
+        double x2: ending x coordinate
+        double y2: ending y coordinate
+    Returns:
+        None
+    """
+```
+
+##### fill_polygon(self, polygon, a)
+```python
+def fill_polygon(self, polygon, a):
+    """
+    Draws a semitransparent fill to a completed polygon.
+
+    Args:
+        Polygon polygon: newly completed polygon (self.current)
+        int a: opacity (a in rgba). 128 by default
+    Returns:
+        None
+    """
+```
+
+##### killPolygon(self):
+```python
+def killPolygon(self):
+    """
+    Deletes and resets all of self.current. Deletion alg relies on resetting every pixel within the bounding box of self.current and thus, can cause visual bugs whereby oberlapping or closeby polygons get deleted. This has not affect on the backend and should just be a visual bug. This visual bug can be mended in future updates by making annotation in self.overlay rather than self.canvas.
+
+    Args:
+        None
+    Returns:
+        None
+    """
+```
+
+##### delete_item(self, x1, y1, x2, y2):
+```python
+def delete_item(self, x1, y1, x2, y2):
+    """
+    Deletes an object from self.canvas
+
+    Args:
+        double x1, y1, x2, y2: Defines a bounding box for the object
+    Returns:
+        None
+    """
+```
+___
+### AutoCompleteApp <a name="AutoCompleteApp"></a>
+
+#### Description
+Tacks completed images in the right box in the gui. Its so unimportant that I wont document it. Honestly you could delete it if you want.
+
+___
+### Segment <a name="Segment"></a>
+
+#### Description
+Modified PaintApp class. Used to communicate Point2D and Polygon classes with the physical tkinter GUI by using keybinds to draw points, lines, and polygons while storing their references for use on the backend. Cnstructed from a image canvas and a transparent canvas overlay. Instance variables:
+
+    self.root: tkinter root window
+    self.CW, self.CH: Canvas width and height respectivly
+    self.canvas: tkinter canvas object
+    self.imageO: A reference to the original image to be displayed 
+    self.OW, self.OH: A referecne to the original image dimensions  
+    self.scaleW, self.scaleH: How much we need to divide positions by to get the actual coords    
+    self.image: The oringal image resized to self.CW, self.CH
+    self.img: a tkPhotoImage instance of self.image
+    self.ref: reference to self.img to ward off sneaky garbage collection      
+    self.overlay: Create an RGBA image for transparency
+    self.overlay_img: a tkPhotoImage instance of self.overlay  
+    self.prev_x: Store previous click x-coordinate
+    self.prev_y: Store previous click y-coordinate   
+    self.shapes: Array of Polygon objects
+    self.current: The polygon currently being formed
+    self.current_polygon: Defensive copy of self.current
+
+#### Methods
+
+##### on_return(self)
+```python
+def on_return(self):
+    """
+    Adds the current shape (self.current) to self.shapes[] and resets the polygon parameters (self.current, self.prev_x, self.prev_y = None, None, None)
+
+    Args:
+        None
+    Returns:
+        None
     """
 ```
