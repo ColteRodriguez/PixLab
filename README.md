@@ -1,13 +1,78 @@
 # PixLab: Installation, Troubleshooting, and Documentation
-With Dependencies!!
+The PixLab repository is an implementation of Facebook’s detectron2, which allows users to trace constituents on sample images as well as utilize a suite of ML tools to automate this process. The PixLab repository has 2 main components.
 
-# NOTICES:
+## Table of Contents
+
+1. [Overview](#Overview)
+2. [NOTICES](#NOTICES)
+3. [Updates](#Updates)
+4. [Full Documentation](#Doc)
+
+## Overview <a name="Overview"></a>
+
+### Component 1: The PixLab GUI (PixLab.py)
+Annotating sample images in the PixLab GUI does 2 things:
+1. Keeps track of annotations (how much of the sample is what constituent). 
+2. Saves annotations to a dataset, which can be used by component 2
+
+### Component 2: The PixLab ML suite (Train_Custom_Dataset.py and Run_Image_Analysis.py)
+Tracing constituents on images is accurate for small datasets. Say, 2 sample images. However, we can imagine larger sets of sample images, say 200 images of various carbonates where we want to know the facies composition. It would take months to trace all those facies! Thus, it may be advantageous to trace a couple manual annotations, and train a ML model to make the rest.
+Once a user has completed a sufficient amount of annotations, they can train a detectron2 panoptic segmentation model to analyze other sample images. This can simply be done by running Train_Custom_Dataset.py. This will train a panoptic segmentation model, register the dataset with detectron2 and save the model to the modelzoo subdirectory in the PixLab repository. Alternatively, if the user does not want to train their own model, they can utilize one of three that are preloaded to the PixLab repository./
+
+In order to utilize detectron2 to make annotations, simply run Run_Image_Analysis.py. This program:
+1. Prompts the user for the image they would like analyzed
+2. Determines the correct ML pipeline for the image. This pipeline is determined automatically using an image classification model which effectively determines
+   - Are there features in the foreground that can be identified with a detectron2 mask r-cnn? Essentially is the image of two endmembers – grainstone or mudstone-packstone?
+   - How complex are the sample features, is there another approach that will provide better results than panoptic segmentation?
+
+3. Once the pipeline is determined, the user is prompted to select on which model the ML will make predictions. By default, PixLab comes preloaded with 3 models:
+   - Just_Ooids: Most accurate at identifying circular-semicircular clasts. Makes predictions on 3 classes using mask r-cnn and 2 classes using a pixel-wise Linear Regression model:
+     * Ooid
+     * Altered Ooid
+     * Compound Grain
+     * Pore Space
+     * Mud Matrix
+       
+   - Generalized_Carbonates: Accurate for a wide variety of facies. Makes predictions on 6 classes using mask r-cnn and 4 classes using a pixel-wise Linear Regression model:
+     * Ooid
+     * Altered Ooid
+     * Compound Grain
+     * Cemented Bioclast
+     * Bioclast Bryozoa
+     * Bioclast Foraminifers
+     * Pore Space
+     * Mud Matrix
+     * Altered Cement-Mud Crystallization
+     * Organic Veins
+       
+   - Faster_Bioclast_Recognition: Best for packstones with a few features. Makes predictions on 4 classes using mask r-cnn and 4 classes using a pixel-wise Linear Regression model
+     * Cemented Bioclast
+     * Bioclast Bryozoa
+     * Bioclast Foraminifers
+     * Ooid
+     * Pore Space
+     * Mud Matrix
+     * Altered Cement-Mud Crystallization
+     * Organic Veins
+
+Additionally, any model that the user has trained with Train_Custom_Dataset.py will also appear as an option here
+
+4. Once a model is selected, the ML pipeline will be run. This consists of a few steps:
+   1. Breaking the large image into a couple smaller segments
+   2. Running the pipeline on each segment, extracting the features identified by mask r-cnn, as well as the matrix composition determined by the pixel-wise Linear Regression model.
+   3. Splicing the segments back together and displaying the results.
+
+5. The output is a complete breakdown of the sample image constituents. The results are then saved for future reference.
+
+
+# NOTICES: <a name="NOTICES"></a>
 Sorry for the visual bugs, our worker bees (me) are working so very hard to debug!
 Here's a (very unprofessional) code demo video as a placeholder for README -- nobody reads those anyways right?
 
 [https://www.youtube.com/watch?v=27rF6Az2xL4](https://youtu.be/sTqYdOxsvGE)
 
-## Updates (As of noon 07-02-2024):
+
+## Updates (As of noon 07-02-2024): <a name="Updates"></a>
 - Fixed specific->generic path to spreadsheet in SheetAPI
 - Added the Time Machine! View annotations for all facies on saved images to compare annotations with others or to ensure consistent annotating
 
@@ -17,7 +82,7 @@ Here's a (very unprofessional) code demo video as a placeholder for README -- no
 - Other minor bug fixes
 
 
-# FULL DOCUMENTATION
+# FULL DOCUMENTATION <a name="Doc"></a>
 
 ## Table of Contents
 
@@ -362,7 +427,7 @@ def delete_item(self, x1, y1, x2, y2):
     """
 ```
 ___
-### AutoCompleteApp <a name="AutoCompleteApp"></a>
+### ScrollableListApp <a name="ScrollableListApp"></a>
 
 #### Description
 Tracks completed images in the right box in the gui. Its so unimportant that I wont document it. Honestly you could delete it if you want.
