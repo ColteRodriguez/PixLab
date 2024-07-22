@@ -704,7 +704,7 @@ ___
 ### JsonEncoder <a name="JsonEncoder"></a>
 
 #### Description
-Library of methods for tracking annotations in JSON files for detectron2. The configuration mirrors that of "labelme" and thus is not already in COCO format. Converting to COCO is handled by Train_Custom_Dataset.py (see MLtools) however, this method is error prone. I've been dreaming up solutions to just saving JSON files in COCO format but all require substantial code changes and in its current fragile state, I dont want to release an update which makes PixLab dysfunctional.
+Library of methods for tracking annotations in JSON files for detectron2. JSON file is effectivly a hashmap storing annotation attributes which are also themselves hashmaps and, in some cases hashmaps of hashmaps. The configuration mirrors that of "labelme" and thus is not already in COCO format. Converting to COCO is handled by Train_Custom_Dataset.py (see MLtools) however, this method is error prone. I've been dreaming up solutions to just saving JSON files in COCO format but all require substantial code changes and in its current fragile state, I dont want to release an update which makes PixLab dysfunctional.
 
 #### Methods
 
@@ -712,14 +712,80 @@ Library of methods for tracking annotations in JSON files for detectron2. The co
 ```python
 def create_json_string(label, points, imagePath, imageHeight, imageWidth):
     """
-    Creates a JSON file 
+    Creates a JSON file and intializes the first shape
 
     Args:
-        String folder_path: path to the sample_image subfolder in the project directory
-        String helperfilepath: path to FS_helper.txt to ensure no previously segmented images are returned
-        int sheet_num: 0 by default
+        String label: label/constituent name of the annotation
+        String points: see getPointsJSON() in Polygon.py
+        int imageHeight, imageWidth: Actual image dimensionas before tkinter resize (self.OW and self.OH of class PaintApp in Segment.py)
     Returns:
-        String: path to a sample image
+        JSON file contents on init
     """
 ```
 
+##### add_shape_to_json(json_string, label, points)
+```python
+def add_shape_to_json(json_string, label, points):
+    """
+    Effectivly put(). Adds a shape to the Shapes attribute of JSON
+
+    Args:
+        String json_string: Information regarding the annotation
+        String points: see getPointsJSON() in Polygon.py
+        String label: label/constituent name of the annotation
+    Returns:
+        All of the shapes attributes
+    """
+```
+
+##### get_shapes(img_path)
+```python
+def get_shapes(img_path):
+    """
+    Takes an image path, searches for its JSOn file and if it exists, returns all of the shapes attributes
+
+    Args:
+        String img_path: full image path
+    Returns:
+        All of the shapes attributes
+    """
+```
+
+##### changeSource(img_path, jsonfile)
+```python
+def changeSource(img_path, jsonfile):
+    """
+    Used in Train_Custom_Dataset.py to update the image path in the JSON file when /labeled is moved to a new folder to be read by detectron2
+
+    Args:
+        String img_path: full new image path
+        String jsonfile: json file path
+    Returns:
+        None
+    """
+```
+___
+## MLtools <a name="MLtools"></a>
+
+### Train_Custom_Dataset <a name="Train_Custom_Dataset"></a>
+
+#### Description
+
+
+#### Methods
+
+##### locate_sample(spreadsheet_path, name_query, sheet_num)
+```python
+def locate_sample(spreadsheet_path, name_query, sheet_num):
+    """
+    Finds the spreadsheet coordinates of a given query string
+
+    Args:
+        String spreadsheet_path: full path to spreadsheet
+        String name_query: String to locate
+        int sheet_num: 0 by default
+    Returns:
+        int row: returns None iff the query string doesnt exist in spreadsheet_path
+        int col: returns None iff the query string doesnt exist in spreadsheet_path
+    """
+```
