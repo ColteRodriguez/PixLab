@@ -368,7 +368,7 @@ ___
 ### AutoCompleteApp <a name="AutoCompleteApp"></a>
 
 #### Description
-A tkinter dependecy udes to display options of annotations in the annotation window to keep naming consistent. Instance vars:
+A tkinter dependecy used to display options of annotations in the annotation window to keep naming consistent. Instance vars:
 
         self.parent: tkinter window (typically an instance of tk.TopLevel)
         self.options: String[] of options
@@ -424,7 +424,7 @@ ___
 ### SheetAPI <a name="SheetAPI"></a>
 
 #### Description
-NOT AN API I DON'T KNOW WHY I CALLED IT AN API THERE AREN'T EVEN ANY CLASSES ITS JUST A LIBRARY BUT I DON'T WANT TO CHANGE THE NAME NOW. Uses openpyxl to manipulate Point_Counts.xlsx and track annotations in the GUI.
+NOT AN API I DON'T KNOW WHY I CALLED IT AN API THERE AREN'T EVEN ANY CLASSES ITS JUST A LIBRARY BUT I DON'T WANT TO CHANGE THE NAME NOW. Uses openpyxl to manipulate Point_Counts.xlsx and track annotations in the GUI. Used by Segmentation.py to add new samples to the spreadsheet and by the PixLab.py gui to track sample annotations.
 
 #### Methods
 
@@ -538,38 +538,120 @@ def find_open_cell(filename):
 ```python
 def update_spreadsheet(polygon_area, constituent, image, altertion_score, path):
     """
-     Adds a new costituent column header
+     Calls all other methods in the library to update Point_Counts.xlsx upon saving an annotation in PixLab
 
     Args:
-        String filename: Spreadsheet path
-        int col: open column to add
+        Double polygon_area: number of pixels in the polygon
+        String constituent: label of the annotation/polygon
+        String image: path to the image being annotated
+        int altertion_score: alteration score
+        String path; spreadsheet path
     Returns:
         None
     """
 ```
 ___
-## Libraries <a name="Libraries"></a>
-
-### SheetAPI <a name="SheetAPI"></a>
+### SetupAPI <a name="SetupAPI"></a>
 
 #### Description
-NOT AN API I DON'T KNOW WHY I CALLED IT AN API THERE AREN'T EVEN ANY CLASSES ITS JUST A LIBRARY BUT I DON'T WANT TO CHANGE THE NAME NOW. Uses openpyxl to manipulate Point_Counts.xlsx and track annotations in the GUI.
+NOT AN API I DON'T KNOW WHY I CALLED IT AN API THERE AREN'T EVEN ANY CLASSES ITS JUST A LIBRARY BUT I DON'T WANT TO CHANGE THE NAME NOW. Uses openpyxl, PIL and matplotlib to perform actions in Setup.py and Segmentation.py. Handles image segmentation and all of the folder/file manipulation in Setup.py. Not called by PixLab.py at all.
 
 #### Methods
 
-##### locate_sample(spreadsheet_path, name_query, sheet_num)
+##### grab_random_image(folder_path, helperfilepath)
 ```python
-def locate_sample(spreadsheet_path, name_query, sheet_num):
+def grab_random_image(folder_path, helperfilepath):
     """
-    Finds the spreadsheet coordinates of a given query string
+    grabs a random, non-segmented image from the input folder path
 
     Args:
-        String spreadsheet_path: full path to spreadsheet
-        String name_query: String to locate
+        String folder_path: path to the sample_image subfolder in the project directory
+        String helperfilepath: path to FS_helper.txt to ensure no previously segmented images are returned
         int sheet_num: 0 by default
     Returns:
-        int row: returns None iff the query string doesnt exist in spreadsheet_path
-        int col: returns None iff the query string doesnt exist in spreadsheet_path
+        String: path to a sample image
+    """
+```
+
+##### create_subdirectories(home, path)
+```python
+def create_subdirectories(home, path):
+    """
+    A single-use function to create subdirectories and helper files in the project directory
+
+    Args:
+        String home: path to the code directory
+        String path: path to project directory
+    Returns:
+        none
+    """
+```
+
+##### create_spreadsheet(home)
+```python
+def create_spreadsheet(home):
+    """
+    Just to avoid creating subdirs and files
+
+    Args:
+        String home: path to the project directory (variable naming is horrible consistent im sorry)
+    Returns:
+        none
+    """
+```
+
+##### slice_segments(in_image, imName, external_drive_path)
+```python
+def slice_segments(in_image, imName, external_drive_path):
+    """
+    Segments an image in sample_images into multiple smaller cells and saves the cells into a folder in /Unlabeled. (project/training_data/All_data/Unlabeled/{image_name})
+
+    Args:
+        String in_image: full path to the image
+        String imName: Name of the image without path or extension
+        external_drive_path: path to the project directory
+    Returns:
+        none
+    """
+```
+
+##### slice_segments(in_image, imName, external_drive_path)
+```python
+def slice_segments(in_image, imName, external_drive_path):
+    """
+    Segments an image in sample_images into multiple smaller cells and saves the cells into a folder in /Unlabeled. (project/training_data/All_data/Unlabeled/{image_name})
+
+    Args:
+        String in_image: full path to the image
+        String imName: Name of the image without path or extension
+        external_drive_path: path to the project directory
+    Returns:
+        none
+    """
+```
+
+Lines 175-385 define classes for cutting up images with a quadtree energy-gradient algorithm. This process is left over from a previous iteration of the GUI. Essentially its only function is to split suqare images into several smaller square sections. I've kept it in because sometimes it works well if we want smaller image segments. However, a better, more updated approach would involve just 1 method which splits the image into n suqare cells of size m. This can be done in like 30 lines of code and should be a change I consider making in future updates however, for now I'm just keeping what works.
+___
+
+### JsonEncoder <a name="JsonEncoder"></a>
+
+#### Description
+Library of methods for tracking annotations in JSON files for detectron2. The configuration mirrors that of "labelme" and thus is not already in COCO format. Converting to COCO is handled by Train_Custom_Dataset.py (see MLtools) however, this method is error prone. I've been dreaming up solutions to just saving JSON files in COCO format but all require substantial code changes and in its current fragile state, I dont want to release an update which makes PixLab dysfunctional.
+
+#### Methods
+
+##### create_json_string(label, points, imagePath, imageHeight, imageWidth)
+```python
+def create_json_string(label, points, imagePath, imageHeight, imageWidth):
+    """
+    Creates a JSON file 
+
+    Args:
+        String folder_path: path to the sample_image subfolder in the project directory
+        String helperfilepath: path to FS_helper.txt to ensure no previously segmented images are returned
+        int sheet_num: 0 by default
+    Returns:
+        String: path to a sample image
     """
 ```
 
