@@ -32,10 +32,6 @@ while(True):
         print("I'm sorry to hear that. Trying new inputs")
         continue
         
-# Ensure no other actions to give the alg time to work
-for i in range(20):
-    print(Fore.WHITE + '|', end='')
-    time.sleep(0.2)
 print('\n')
 
 spipy.slice_segments(random_image, image_name, home_data, threshold, minCell, helperfilepath)
