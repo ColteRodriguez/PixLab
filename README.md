@@ -958,6 +958,10 @@ Let's double check we can both import pytorch and detectron2 by running python w
     # if both works, let's just exit
     exit()
 
+Then whe you download and want to run code in the PixLab repo, simple cd into the code folder and run
+
+    conda activate geo
+
 This is an obnoxious step, and, while it isn't strictly required to run the code in the repo, it will lead to fewer errors
 
 ### Documented Errors, Bugs, and, fixes <a name="Documented_Errors_Bugs_and_fixes"></a>
