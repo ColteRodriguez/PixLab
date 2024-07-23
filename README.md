@@ -66,6 +66,8 @@ Additionally, any model that the user has trained with Train_Custom_Dataset.py w
 
 
 # NOTICES: <a name="NOTICES"></a>
+Should have a workable version updated by end of today July 23, 2024
+
 Sorry for the visual bugs, our worker bees (me) are working so very hard to debug!
 Here's a (very unprofessional) code demo video as a placeholder for README -- nobody reads those anyways right?
 
