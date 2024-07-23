@@ -925,8 +925,14 @@ ___
 Further explainations of important code, messy/poorly written code, links to further reading and tutorials, troubleshooting, next steps with this code.
 
 ### Preclassifier <a name="Preclassifier"></a>
-![For readme (3)](https://github.com/user-attachments/assets/2e989f91-d86f-48de-a4f0-8c9797953ae9)
+The preclassifier module is an initial attempt at sorting sample images with torchvision resnet18 to avoid poor constituent classification by running detectron2 on packstones or homogenous mustones with few interclasts. It works pretty well but only for the ODP866a data so its recomended that you disconnnect the preclassifier. See [Run_Image_Analysis](#Run_Image_Analysis) on how to disconnect the Preclassifier. As for tunable parameters, this torchvision code supports a lot less testing customization than detectron2 (and I also spent far less time on this than the other ML). I don't fully understand the preclassifier, here is my proposed soultion.
 
+![For readme (4)](https://github.com/user-attachments/assets/1b9b7e9c-4bc8-4716-b7ae-f4c3fce078fa)
 
+### Detectron2 Useful Info <a name="Detectron2_Usefull_Info"></a>
 
-#### Description
+The detectron2 repo can be found [here](https://github.com/facebookresearch/detectron2/tree/main). Everything necesary to the project can be found either in this Readme or in their tutorial ipynb.
+
+### Documented Errors, Bugs, and, fixes <a name="Documented_Errors_Bugs_and_fixes"></a>
+
+This will be updated in Production testing
