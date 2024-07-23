@@ -925,5 +925,6 @@ ___
 Further explainations of important code, messy/poorly written code, links to further reading and tutorials, troubleshooting, next steps with this code.
 
 ### Preclassifier <a name="Preclassifier"></a>
+![For readme](https://github.com/user-attachments/assets/c2bed6ee-2585-49ab-8e6b-14c9bb68403b)
 
 #### Description
