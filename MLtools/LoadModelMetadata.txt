@@ -1,0 +1,32 @@
+{
+    "Just_Ooids10": [
+        "Ooid",
+        "Altered_Ooid",
+        "Composite_Grain"
+    ],
+    "Ooids_test": [
+        "Ooid",
+        "Altered_Ooid",
+        "Composite_Grain"
+    ],
+    "Just_Ooids09": [
+        "Ooid",
+        "Altered_Ooid",
+        "Composite_Grain"
+    ],
+    "Just_Ooids08": [
+        "Ooid",
+        "Altered_Ooid",
+        "Composite_Grain"
+    ],
+    "model_final": [
+        "Ooid",
+        "Altered_Ooid",
+        "Composite_Grain"
+    ],
+    "endtoendtest": [
+        "Ooid",
+        "Composite_Grain",
+        "Altered_Ooid"
+    ]
+}
