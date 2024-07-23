@@ -766,11 +766,28 @@ def changeSource(img_path, jsonfile):
 ```
 ___
 ## MLtools <a name="MLtools"></a>
+MLtools consists of two runable python files with detectron2 and torchvision dependencies
 
 ### Train_Custom_Dataset <a name="Train_Custom_Dataset"></a>
 
 #### Description
+Train_Custom_Dataset.py takes annotations from /labeled, converts json --> COCO formatted annotations, registers a dataset with detectron2, trains an instance segmentation model (COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x), Then saves the .yaml and .pth files to /output in order to make inferences on new images. Train_Custom_Dataset.py has a couple tunable parameters which can alter model performace. There parameters will be listed here with links to the methods documenting these parameters more in depth. I've contemplated giving the user the choice to tune parameters in the command line, however this seems too involved and I'd rather just run a default taining process that works well rather than have the user painstakingly tests parameters -- especially when training takes so long without cpu. The code for training uses detectron2's tutorial as a shell. This can be found [here](https://detectron2.readthedocs.io/en/latest/tutorials/getting_started.html).
 
+| param                 |  Explaination  |
+| --------------------- | -------------- |
+| cfg:                  | load an empty detectron2 configuration with get_cfg() on which we will build  |
+| cfg.MODEL.DEVICE:     | cpu or gpu, cpu is slower and also the only option for mac.                     |
+| cfg.merge_from_file() | The model_zoo is a subdirectory of detectron2 which hosts all of the untrained models. Instance segmentation works best for constituent outlining, but you can view all the options in the full model zoo: https://github.com/facebookresearch/detectron2/blob/main/MODEL_ZOO.md |
+| cfg.DATASETS.TRAIN    | Path to the training dataset /train                                          |
+| cfg.DATASETS.TEST     | Path to the training dataset /test or () if not testing data exists          |
+| cfg.DATALOADER.NUM_WORKERS | Relates to the number of parallel runs executed by the mutiprocessor, can cause errors, but ive found that 0 works fine |
+| cfg.MODEL.WEIGHTS     | Initialize from model zoo. Getting the checkpoint of cfg.merge_from_file()   |
+| cfg.SOLVER.IMS_PER_BATCH |  Number of samples passed through each step of the model at the same time. Higher number == faster training. 2 by default |
+| cfg.SOLVER.BASE_LR    | the learning rate, how much the model is punished for a wrong prediction in training. 0.00025 by default. |
+| cfg.SOLVER.MAX_ITER   | Higher number = more thourough training, though may lead to overtraining, smaller number = faster training but may casue undertraining. 300 by default 300 |
+| cfg.SOLVER.STEPS      | How to decay the learning rate for each iteration. Maybe we want to punish the model less as it learns more?. 0 by default -- No learning rate decay |
+| cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE | Default is 128. From ghost in [this forum](https://github.com/facebookresearch/detectron2/issues/1341): "parameter is used to sample a subset of proposals coming out of RPN to calculate cls and reg loss during training. Calculating loss on all RPN proposals isn't computationally efficient." |
+| cfg.MODEL.ROI_HEADS.NUM_CLASSES | Number of classes. Default is len(labels)  where labels is the output of get_unique_labels() |
 
 #### Methods
 
@@ -850,16 +867,63 @@ def register_dataset(labels, dataset_name, dataset_path):
 ```python
 def train_and_save(metadata, training_supplies, labels, model_name):
     """
-    Registers a COCO formatted version of annotations with detectron2
+    Trains a detectron2 model on given training data
 
     Args:
-        String[] labels: Array of unique labels
-        String dataset_name: model name as given by user
-        String dataset_path: path to the new subdirectory with the dataset
-
+        hashmap metadata: Contains {name="modelName", thing_classes=[labels]}, thing_classes is sometimes lost durring training, so metadata is saved to loadModelMetadata.txt
+        String training_supplies: full path to the training dataset
+        String[] labels: array of labels/classes on which to train model
+        String model_name: Subset of training_supplies, just the parent dir or model name
     Returns:
-        Hashmap microfacies_metadata: Hashmap of dataset metadata as {name={datasetname}, thing_classes=[labels]}. See add_key_value_to_dict() <-- this is important and may be a source of bugs
-        String (dataset_name + "_train"): Full path to the training folder
+        None
+    """
+```
+___
+### Run_Image_Analysis <a name="Run_Image_Analysis"></a>
+
+#### Description
+Run_Image_Analysis.py Takes in a sample image and runs an ML pipeline to analyze the constituents and background of the sample. Currently the code only runs detectron2 instance segmentation. However, a little sneak peak, and I didnt tell you this, but a future update will feature a pipeline.txt file and a local_model_zoo folder in the code folder where users can construct ML pipelines from the models they trainined or written themselves. The purpose of this would be to enable contituent classification and classification of background objects (matrices) for the most accurate image classification yet. This approach will also enable users to make the ML as simple or complicated as they would like./
+Run_Image_Analysis.py also has some tunable parameters and other bells and whistles that can be changed or deleted
+
+| param                 |  Explaination  |
+| --------------------- | -------------- |
+| image_type = Torch_Interface.get_image_type(image) | Runs a torchvision resnet image classification to determine the ML pipeline. This will be depricated in the sneaky upcomming update as it is a pretty bad solution to the problem of ML pipelines. To just ensure that detectron2 Instance segmentation is run every time, replace this with image_type = "Constituent"|
+| 'thresh' in DETECT_OBJECTS() | Detectron2 testing threshold, effectivly the sensitivity of the model predictions, 0.1 by default. Higher number = higher sensitivity classification |
+
+#### Methods
+
+##### DETECT_OBJECTS(image, model_name, thresh)
+```python
+def DETECT_OBJECTS(image, model_name, thresh):
+    """
+    Runs a detectron2 DefaultPredictor on a custom configuration build on a pretrained model defines by model_name
+
+    Args:
+        String image: Full path to the sample image on which predictions will be made.
+        String model_name: input by user in command line
+        double thresh: testing threshold (see tunable parameters)
+    Returns:
+        None
     """
 ```
 
+##### DETECT_BACKGROUND()
+```python
+def DETECT_BACKGROUND():
+    """
+    Currently unsupported. Background classification using linear combination, k-clustering or PCA
+
+    Args:
+        None
+    Returns:
+        None
+    """
+```
+___
+
+## Miscellaneous <a name="Miscellaneous"></a>
+Further explainations of important code, messy/poorly written code, links to further reading and tutorials, troubleshooting, next steps with this code.
+
+### Preclassifier <a name="Preclassifier"></a>
+
+#### Description
