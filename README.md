@@ -66,13 +66,13 @@ Additionally, any model that the user has trained with Train_Custom_Dataset.py w
 
 
 # NOTICES: <a name="NOTICES"></a>
-Should have a workable version updated by end of today July 23, 2024
+1. Should have a workable version updated by end of today July 23, 2024
 
-Sorry for the visual bugs, our worker bees (me) are working so very hard to debug!
+2. Sorry for the visual bugs, our worker bees (me) are working so very hard to debug!
 Here's a (very unprofessional) code demo video as a placeholder for README -- nobody reads those anyways right?
-
 [https://www.youtube.com/watch?v=27rF6Az2xL4](https://youtu.be/sTqYdOxsvGE)
 
+3. See [Detectron2 Useful Info](#Detectron2_Usefull_Info). It is highly recomended that you run the code in a conda environment. This ensures that detectron2 doesnt wreck your computer
 
 ## Updates (As of noon 07-02-2024): <a name="Updates"></a>
 - Fixed specific->generic path to spreadsheet in SheetAPI
@@ -934,6 +934,31 @@ The preclassifier module is an initial attempt at sorting sample images with tor
 ### Detectron2 Useful Info <a name="Detectron2_Usefull_Info"></a>
 
 The detectron2 repo can be found [here](https://github.com/facebookresearch/detectron2/tree/main). Everything necesary to the project can be found either in this Readme or in their tutorial ipynb.
+
+In order to avoid including a correct detectron2 build in the repo and wasting space, the code installs detectron2 and dependencies automatically to your device. Some modules, like detectron2 and torchvision are best installed and run through a conda environment. With anaconda installed simply run the following in the terminal/CL:
+
+    # create environment geo with python version 3.9 installed on
+    conda create -n geo python=3.9
+    # activate environment, you can now install the different packages in your newly created environment.
+    conda activate geo
+    conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
+
+And install detectron2
+
+    git clone git@github.com:facebookresearch/detectron2.git # if this does not work, download detectron2 repo as zip file.
+    cd detectron 2
+    pip install -e .
+
+Let's double check we can both import pytorch and detectron2 by running python with the following command:
+
+    python
+
+    import torch
+    import detectron2
+    # if both works, let's just exit
+    exit()
+
+This is an obnoxious step, and, while it isn't strictly required to run the code in the repo, it will lead to fewer errors
 
 ### Documented Errors, Bugs, and, fixes <a name="Documented_Errors_Bugs_and_fixes"></a>
 
