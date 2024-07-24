@@ -960,11 +960,12 @@ Let's double check we can both import pytorch and detectron2 by running python w
     # if both works, let's just exit
     exit()
 
-Then whe you download and want to run code in the PixLab repo, simple cd into the code folder and run
+Then when you download and want to run code in the PixLab repo, simple cd into the code folder and run
 
     conda activate geo
 
 This is an obnoxious step, and, while it isn't strictly required to run the code in the repo, it will lead to fewer errors
+
 
 ### Documented Errors, Bugs, and, fixes <a name="Documented_Errors_Bugs_and_fixes"></a>
 
@@ -992,7 +993,7 @@ This repository leverages a variety of external packages and repositories cited 
 | [pytorch](https://pypi.org/project/pytorch/) | dependent of detectron2 |
 | [detectron2](https://github.com/facebookresearch/detectron2) | with pytorch/torchvision, see bellow for full citation |
 
-Because PixLab clones the Detectron2 repository rather then redistributing it or modifying it, it doesn't qualify as a Derivative work. Citation for Detectron2 (Wich also linkes to the repository's relevant license):
+Because PixLab clones the Detectron2 repository rather then redistributing it or modifying it, it doesn't qualify as a Derivative work. Citation for Detectron2 (Wich also links to the repository's relevant license):
 
     @misc{wu2019detectron2,
       author =       {Yuxin Wu and Alexander Kirillov and Francisco Massa and
@@ -1004,7 +1005,7 @@ Because PixLab clones the Detectron2 repository rather then redistributing it or
 
 # How to Cite This Repository<a name="Citations2"></a>
 
-See LICENSE.txt. While not required, if you wish to cite further use:
+See LICENSE.txt for guidlines. While not required, if you wish to cite further use:
 
     Rodriguez C. 2024, Jul 24. PixLab 1.0.0, Retrieved from [https://github.com/username/repository_name](https://github.com/ColteRodriguez/PixLab/tree/main)
 
