@@ -7,6 +7,8 @@ The PixLab repository is an implementation of Facebook’s detectron2, which all
 2. [NOTICES](#NOTICES)
 3. [Updates](#Updates)
 4. [Full Documentation](#Doc)
+5. [Citations](#Citations)
+6. [How To Cite](#Citations2)
 
 ## Overview <a name="Overview"></a>
 
@@ -967,3 +969,42 @@ This is an obnoxious step, and, while it isn't strictly required to run the code
 ### Documented Errors, Bugs, and, fixes <a name="Documented_Errors_Bugs_and_fixes"></a>
 
 This will be updated in Production testing
+
+# Citations <a name="Citations"></a>
+This repository leverages a variety of external packages and repositories cited here
+
+| Package               |  Use  |
+| --------------------- | -------------- |
+| [Colorama](https://pypi.org/project/colorama/) | For coloring text in output for readability |
+| [matplotlib](https://pypi.org/project/matplotlib/) | For displaying image/graph outputs and some image manipulation with cv2 |
+| [xlsxwriter](https://pypi.org/project/XlsxWriter/) | For creating an excel file to track manual annotations |
+| [openpyxl](https://pypi.org/project/openpyxl/) | Handles all excel file manipulation in place of xlsxwriter |
+| [PIL](https://pypi.org/project/pillow/) | Handles some image manipulation in lieu of cv2 |
+| [pathlib](https://pypi.org/project/pathlib/) | Works with os for file movement and creation of subdirectories |
+| shutil | Works with os and pathlib for file movement and creation of subdirectories |
+| [opencv-python/cv2](https://pypi.org/project/opencv-python/) | For image manipulation, displaying outputs, array manipulation |
+| tkinter | Frontend of PixLab.py is constructed from tkinter widgets |
+| time | Standard python module for runtime calculations |
+| math | Standard python module |
+| [numpy](https://pypi.org/project/numpy/) | Standard python package. For array manipulation and some math functionality |
+| random | Standard python module |
+| os | Standard python module |
+| [pytorch](https://pypi.org/project/pytorch/) | dependent of detectron2 |
+| [detectron2](https://github.com/facebookresearch/detectron2) | with pytorch/torchvision, see bellow for full citation |
+
+Citation for Detectron2:
+
+    @misc{wu2019detectron2,
+      author =       {Yuxin Wu and Alexander Kirillov and Francisco Massa and
+                     Wan-Yen Lo and Ross Girshick},
+      title =        {Detectron2},
+      howpublished = {\url{https://github.com/facebookresearch/detectron2}},
+      year =         {2019}
+    }
+
+# How to Cite This Repository<a name="Citations2"></a>
+
+See LICENSE.txt. While not required, if you wish to cite further use:
+
+    Rodriguez C. 2024, Jul 24. PixLab 1.0.0, Retrieved from [https://github.com/username/repository_name](https://github.com/ColteRodriguez/PixLab/tree/main)
+
