@@ -993,7 +993,7 @@ This repository leverages a variety of external packages and repositories cited 
 | [pytorch](https://pypi.org/project/pytorch/) | dependent of detectron2 |
 | [detectron2](https://github.com/facebookresearch/detectron2) | with pytorch/torchvision, see bellow for full citation |
 
-Because PixLab clones the Detectron2 repository rather then redistributing it or modifying it, it doesn't qualify as a Derivative work. Citation for Detectron2 (Wich also links to the repository's relevant license):
+Because PixLab clones the Detectron2 repository rather then redistributing it or modifying it, it doesn't qualify as a Derivative work. Citation for Detectron2 (which also links to the repository's relevant license):
 
     @misc{wu2019detectron2,
       author =       {Yuxin Wu and Alexander Kirillov and Francisco Massa and
@@ -1007,5 +1007,5 @@ Because PixLab clones the Detectron2 repository rather then redistributing it or
 
 See LICENSE.txt for guidlines. While not required, if you wish to cite further use:
 
-    Rodriguez C. 2024, Jul 24. PixLab 1.0.0, Retrieved from [https://github.com/username/repository_name](https://github.com/ColteRodriguez/PixLab/tree/main)
+    Rodriguez C. 2024, Jul 24. PixLab 1.0.0, Retrieved from https://github.com/ColteRodriguez/PixLab/tree/main
 
