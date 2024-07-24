@@ -4,7 +4,7 @@ The PixLab repository is an implementation of Facebook’s detectron2, which all
 ## Table of Contents
 
 1. [Overview](#Overview)
-2. [NOTICES](#NOTICES)
+2. [Notices](#NOTICES)
 3. [Updates](#Updates)
 4. [Full Documentation](#Doc)
 5. [Citations](#Citations)
@@ -67,7 +67,7 @@ Additionally, any model that the user has trained with Train_Custom_Dataset.py w
 5. The output is a complete breakdown of the sample image constituents. The results are then saved for future reference.
 
 
-# NOTICES: <a name="NOTICES"></a>
+# Notices: <a name="Notices"></a>
 1. Should have a workable version updated by end of today July 23, 2024
 
 2. Sorry for the visual bugs, our worker bees (me) are working so very hard to debug!
