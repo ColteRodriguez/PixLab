@@ -1005,7 +1005,7 @@ Because PixLab clones the Detectron2 repository rather then redistributing it or
 
 # How to Cite This Repository<a name="Citations2"></a>
 
-See LICENSE.txt for guidlines. While not required, if you wish to cite further use:
+Refer to LICENSE.txt for guidlines. If you wish to cite further use:
 
-    Rodriguez C. 2024, Jul 24. PixLab 1.0.0, Retrieved from https://github.com/ColteRodriguez/PixLab/tree/main
+    Rodriguez C. 2024, July 25. PixLab 1.0.1, Retrieved from https://github.com/ColteRodriguez/PixLab/tree/main
 
