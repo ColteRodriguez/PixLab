@@ -84,6 +84,11 @@ Here's a (very unprofessional) code demo video as a placeholder for README -- no
 - Fixed spreadsheet indexing so alteration score is acurate
 - Added primary/background constituent tracking to account for all pixels (while only sneding foreground to training data)
 - Other minor bug fixes
+- 
+## Updates (As of 07-25-2024):
+- Improved readability of output metrics
+- Disconnected the Preclassifier in preparation to delete the subdir altogether and replace with the [new ML pipeline method](#Preclassifier)
+- Updated [demo video](#Notices)
 
 
 # FULL DOCUMENTATION <a name="Doc"></a>
