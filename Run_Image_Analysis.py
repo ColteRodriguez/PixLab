@@ -205,7 +205,6 @@ print(Fore.WHITE + "Excelent choice. \n...Running image classification to determ
 # Run the image classification to determine what model will be used
 
 image_type = Torch_Interface.get_image_type(image)
-image_type = "Constituent"
 
 # Output results of image classification...image of type ____ detected. Proceeding to run {MaskRCNN, LinModel, ...}.
 print(Fore.GREEN + "Image classfication was sucessful. \n...Spitting results... \n")
@@ -252,3 +251,4 @@ if image_type == "Constituent":
 elif image_type == "Background":
     print(Fore.GREEN + f"\nExcelent choice! running {image} on {ML_zoo[image_type]}.\n\n")
     DETECT_BACKGROUND()
+
