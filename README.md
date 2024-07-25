@@ -70,9 +70,9 @@ Additionally, any model that the user has trained with Train_Custom_Dataset.py w
 # Notices: <a name="Notices"></a>
 1. Should have a workable version updated by end of today July 23, 2024
 
-2. Sorry for the visual bugs, our worker bees (me) are working so very hard to debug!
-Here's a (very unprofessional) code demo video as a placeholder for README -- nobody reads those anyways right?
-[https://www.youtube.com/watch?v=27rF6Az2xL4](https://youtu.be/sTqYdOxsvGE)
+2. Sorry for the bugs, our worker bees (me) are working so very hard to debug!
+Here's the most recently updated (very unprofessional) code demo video as a placeholder for README -- nobody reads those anyways right? 
+[https://www.youtube.com/watch?v=27rF6Az2xL4](https://www.youtube.com/watch?v=5ljBU9WYzIA)
 
 3. See [Detectron2 Useful Info](#Detectron2_Usefull_Info). It is highly recomended that you run the code in a conda environment. This ensures that detectron2 doesnt wreck your computer
    
@@ -82,15 +82,15 @@ Here's a (very unprofessional) code demo video as a placeholder for README -- no
 - Fixed specific->generic path to spreadsheet in SheetAPI
 - Added the Time Machine! View annotations for all facies on saved images to compare annotations with others or to ensure consistent annotating
 
-## Updates (As of noon 07-08-2024):
+## Updates (As of noon 07-08-2024) video [here](https://youtu.be/sTqYdOxsvGE):
 - Fixed spreadsheet indexing so alteration score is acurate
 - Added primary/background constituent tracking to account for all pixels (while only sneding foreground to training data)
 - Other minor bug fixes
 - 
-## Updates (As of 07-25-2024):
+## Updates (As of 07-25-2024) video [here](https://www.youtube.com/watch?v=5ljBU9WYzIA):
 - Improved readability of output metrics
 - Disconnected the Preclassifier in preparation to delete the subdir altogether and replace with the [new ML pipeline method](#Preclassifier)
-- Updated [demo video](#Notices)
+- Updated demo video
 
 
 # FULL DOCUMENTATION <a name="Doc"></a>
