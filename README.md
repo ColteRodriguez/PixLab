@@ -74,7 +74,7 @@ Additionally, any model that the user has trained with Train_Custom_Dataset.py w
 Here's the most recently updated (very unprofessional) code demo video as a placeholder for README -- nobody reads those anyways right? 
 [https://www.youtube.com/watch?v=27rF6Az2xL4](https://www.youtube.com/watch?v=5ljBU9WYzIA)
 
-3. See [Detectron2 Useful Info](#Detectron2_Usefull_Info). It is highly recomended that you run the code in a conda environment. This ensures that detectron2 doesnt wreck your computer
+3. See [Detectron2 Useful Info](#Detectron2_Usefull_Info). It is highly recomended that you run the code in a conda environment. This ensures that detectron2 doesnt freak out
    
 4. I wanted to include a preloaded model in MLtools, but .pth files are huge and I can't upload them to github. Check the dropbox for the Ooids model. I'll work on models for other facies throughout then next 2 weeks and upload them there. This way we don't have to spend time both making annotations and training and we can just share/improve upon already trained models
 
