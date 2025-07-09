@@ -893,12 +893,12 @@ ___
 ### Run_Image_Analysis <a name="Run_Image_Analysis"></a>
 
 #### Description
-Run_Image_Analysis.py Takes in a sample image and runs an ML pipeline to analyze the constituents and background of the sample. Currently the code only runs detectron2 instance segmentation. However, a little sneak peak, and I didnt tell you this, but a future update will feature a pipeline.txt file and a local_model_zoo folder in the code folder where users can construct ML pipelines from the models they trainined or written themselves. The purpose of this would be to enable contituent classification and classification of background objects (matrices) for the most accurate image classification yet. This approach will also enable users to make the ML as simple or complicated as they would like./
+Run_Image_Analysis.py Takes in a sample image and runs an ML pipeline to analyze the constituents and background of the sample. Currently the code only runs detectron2 instance segmentation. However, I'd like a future update to feature a pipeline.txt file and a local_model_zoo folder in the code folder where users can construct ML pipelines from the models they trainined or written themselves. The purpose of this would be to enable contituent classification and classification of background objects (matrices) for the most accurate image classification yet. This approach will also enable users to make the ML as simple or complicated as they would like./
 Run_Image_Analysis.py also has some tunable parameters and other bells and whistles that can be changed or deleted
 
 | param                 |  Explaination  |
 | --------------------- | -------------- |
-| image_type = Torch_Interface.get_image_type(image) | Runs a torchvision resnet image classification to determine the ML pipeline. This will be depricated in the sneaky upcomming update as it is a pretty bad solution to the problem of ML pipelines. To just ensure that detectron2 Instance segmentation is run every time, replace this with image_type = "Constituent"|
+| image_type = Torch_Interface.get_image_type(image) | Runs a torchvision resnet image classification to determine the ML pipeline. This should be depricated in the upcomming update as it is a pretty bad solution to the problem of ML pipelines. To just ensure that detectron2 Instance segmentation is run every time, replace this with image_type = "Constituent"|
 | 'thresh' in DETECT_OBJECTS() | Detectron2 testing threshold, effectivly the sensitivity of the model predictions, 0.1 by default. Higher number = higher sensitivity classification |
 
 #### Methods
