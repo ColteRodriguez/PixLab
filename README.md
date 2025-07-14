@@ -93,7 +93,7 @@ Here's the most recently updated (very unprofessional) code demo video as a plac
 - Updated demo video
 
 ## Updates (As of 07-14-2025) video (same) [here](https://www.youtube.com/watch?v=5ljBU9WYzIA):
-- Added the Kmask submodule ([Rodriguez et. al. 2024](https://www.youtube.com/watch?v=5ljBU9WYzIA), [Rodriguez et. al. 2025](https://www.youtube.com/watch?v=5ljBU9WYzIA)) for clustering carbonate anhedral matrix lithologies (see submodule for readme)
+- Added the Kmask submodule ([Rodriguez et. al. 2024](https://www.linkedin.com/in/colten-rodriguez-830664223/details/projects/), [Rodriguez et. al. 2025](https://www.linkedin.com/in/colten-rodriguez-830664223/details/projects/)) for clustering carbonate anhedral matrix lithologies (see submodule for readme)
 - Removed separate Torchvision "preclassifier" garbage -- idk its kinda overkill for the scope of this module
 - Minor bug fixes to improve usability
 
