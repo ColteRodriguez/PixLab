@@ -86,12 +86,16 @@ Here's the most recently updated (very unprofessional) code demo video as a plac
 - Fixed spreadsheet indexing so alteration score is acurate
 - Added primary/background constituent tracking to account for all pixels (while only sneding foreground to training data)
 - Other minor bug fixes
-- 
+  
 ## Updates (As of 07-25-2024) video [here](https://www.youtube.com/watch?v=5ljBU9WYzIA):
 - Improved readability of output metrics
 - Disconnected the Preclassifier in preparation to delete the subdir altogether and replace with the [new ML pipeline method](#Preclassifier)
 - Updated demo video
 
+## Updates (As of 07-14-2025) video (same) [here](https://www.youtube.com/watch?v=5ljBU9WYzIA):
+- Added the Kmask submodule ([Rodriguez et. al. 2024](https://www.youtube.com/watch?v=5ljBU9WYzIA), [Rodriguez et. al. 2025](https://www.youtube.com/watch?v=5ljBU9WYzIA)) for clustering carbonate anhedral matrix lithologies (see submodule for readme)
+- Removed separate Torchvision "preclassifier" garbage -- idk its kinda overkill for the scope of this module
+- Minor bug fixes to improve usability
 
 # FULL DOCUMENTATION <a name="Doc"></a>
 
