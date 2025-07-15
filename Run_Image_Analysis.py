@@ -3,7 +3,6 @@ from pathlib import Path
 import os
 from colorama import Fore
 from PIL import Image
-from Preclassifier import Torch_Interface
 
 from detectron2.engine import DefaultPredictor
 from detectron2.config import get_cfg
