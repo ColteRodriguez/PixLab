@@ -231,7 +231,7 @@ if image_type == "Constituent":
     classes = {}
     i = 0
     for segment in segments:
-        prediction, runtime, conf, classes = DETECT_OBJECTS(segment, 'Just_Ooids10', 0.1, classes)
+        prediction, runtime, conf, classes = DETECT_OBJECTS(segment, modelName, 0.1, classes)
         predictions.append(prediction)
         runtimes.append(runtime)
         confs.append(conf)
