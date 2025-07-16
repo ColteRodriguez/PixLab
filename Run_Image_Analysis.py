@@ -230,8 +230,9 @@ if image_type == "Constituent":
     iters = []
     classes = {}
     i = 0
+    conf_thresh = 0.1
     for segment in segments:
-        prediction, runtime, conf, classes = DETECT_OBJECTS(segment, modelName, 0.1, classes)
+        prediction, runtime, conf, classes = DETECT_OBJECTS(segment, modelName, conf_thresh, classes)
         predictions.append(prediction)
         runtimes.append(runtime)
         confs.append(conf)
