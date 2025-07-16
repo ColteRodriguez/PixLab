@@ -102,7 +102,7 @@ def DETECT_OBJECTS(image, model_name, thresh, classes):
     return prediction, (end-start)/objects, pred_scores.mean().item(), classes
     
     
-def splice_image(image_path):
+def splice_image(image_path, tile_n):
     # Read the image
     image = cv2.imread(image_path)
     if image is None:
@@ -116,13 +116,13 @@ def splice_image(image_path):
         raise ValueError("The image must be square.")
 
     # Calculate the size of each segment
-    segment_size = height // 4
+    segment_size = height // tile_n
 
     segments = []
 
     # Slice the image into 16 segments
-    for i in range(4):
-        for j in range(4):
+    for i in range(tile_n):
+        for j in range(tile_n):
             x_start = j * segment_size
             y_start = i * segment_size
             segment = image[y_start:y_start + segment_size, x_start:x_start + segment_size]
@@ -130,20 +130,20 @@ def splice_image(image_path):
 
     return segments
 
-def stitch_image(segments):
-    if len(segments) != 16:
-        raise ValueError("There must be exactly 16 segments to stitch the image.")
+def stitch_image(segments, tile_n):
+    if len(segments) != (tile_n*tile_n):
+        raise ValueError(f"There must be exactly {tile_n* tile_n} segments to stitch the image.")
 
     # Get the size of each segment
     segment_size = segments[0].shape[0]
 
     # Create a blank canvas to stitch the segments
-    stitched_image = np.zeros((segment_size * 4, segment_size * 4, 3), dtype=np.uint8)
+    stitched_image = np.zeros((segment_size * tile_n, segment_size * tile_n, 3), dtype=np.uint8)
 
     # Stitch the segments back together
-    for i in range(4):
-        for j in range(4):
-            segment = segments[i * 4 + j]
+    for i in range(tile_n):
+        for j in range(tile_n):
+            segment = segments[i * tile_n + j]
             x_start = j * segment_size
             y_start = i * segment_size
             stitched_image[y_start:y_start + segment_size, x_start:x_start + segment_size] = segment
@@ -221,8 +221,8 @@ if image_type == "Constituent":
     print(Fore.WHITE + "Sire, I have conjured up a suite of preloaded models and ones created by you. They are listed above.")
     modelName = input("Which will you be running?: ")
     print(Fore.GREEN + f"\nExcelent choice! running {image} on {ML_zoo[image_type]} framework with {modelName}")
-    
-    segments = splice_image(image)
+    tile_n = 4
+    segments = splice_image(image, tile_n)
 
     predictions = []
     runtimes = []
@@ -239,7 +239,7 @@ if image_type == "Constituent":
         iters.append(i)
         i+=1
 
-    stitched_image = stitch_image(predictions)
+    stitched_image = stitch_image(predictions, tile_n)
     display_image(stitched_image)
     # Print Metrics
     print("\n\nNumber and percentage of identified objects for each class:")
