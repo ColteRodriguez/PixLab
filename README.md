@@ -71,10 +71,10 @@ Additionally, any model that the user has trained with Train_Custom_Dataset.py w
 1. Should have a workable version updated by end of today July 23, 2024
 
 2. Sorry for the bugs, our worker bees (me) are working so very hard to debug!
-Here's the most recently updated (very unprofessional) code demo video as a placeholder for README -- nobody reads those anyways right? 
+Here's the most recently updated (informal) code demo video as a placeholder for README? 
 [https://www.youtube.com/watch?v=27rF6Az2xL4](https://www.youtube.com/watch?v=5ljBU9WYzIA)
 
-3. See [Detectron2 Useful Info](#Detectron2_Usefull_Info). It is highly recomended that you run the code in a conda environment. This ensures that detectron2 doesnt freak out
+3. See [Detectron2 Useful Info](#Detectron2_Usefull_Info).
    
 4. I wanted to include a preloaded model in MLtools, but .pth files are huge and I can't upload them to github. Check the dropbox for the Ooids model. I'll work on models for other facies throughout then next 2 weeks and upload them there. This way we don't have to spend time both making annotations and training and we can just share/improve upon already trained models
 
@@ -93,7 +93,7 @@ Here's the most recently updated (very unprofessional) code demo video as a plac
 - Updated demo video
 
 ## Updates (As of 07-14-2025) video (same) [here](https://www.youtube.com/watch?v=5ljBU9WYzIA):
-- Added the Kmask submodule ([Rodriguez et. al. 2024](https://www.linkedin.com/in/colten-rodriguez-830664223/details/projects/), [Rodriguez et. al. 2025](https://www.linkedin.com/in/colten-rodriguez-830664223/details/projects/)) for clustering carbonate anhedral matrix lithologies (see submodule for readme)
+- Added the Kmask submodule ([Rodriguez et. al. 2024](https://www.linkedin.com/in/colten-rodriguez-830664223/details/projects/)) for clustering carbonate anhedral matrix lithologies (see submodule for readme)
 - Removed separate Torchvision "preclassifier" garbage -- idk its kinda overkill for the scope of this module
 - Minor bug fixes to improve usability
 
